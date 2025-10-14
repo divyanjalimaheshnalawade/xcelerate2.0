@@ -8,9 +8,10 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
 const projectRoutes = require("./routes/projects");
 const skillRoutes = require("./routes/skills");
+const aspiredRoleRoutes = require("./routes/aspiredRoleRoutes");
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 // routes
@@ -18,6 +19,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/skills", skillRoutes);
+app.use("/api/aspired-role", aspiredRoleRoutes);
 
 // simple health
 app.get("/api/health", (req, res) => res.json({ ok: true }));

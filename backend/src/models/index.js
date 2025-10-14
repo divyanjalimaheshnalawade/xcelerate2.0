@@ -6,6 +6,7 @@ const Project = require("./project")(sequelize);
 const Skill = require("./skill")(sequelize);
 const UserSkill = require("./userSkill")(sequelize);
 const Assignment = require("./assignment")(sequelize);
+const AspiredRole = require("./aspiredRole")(sequelize, Sequelize.DataTypes); // <-- IMPORT IT
 
 // Associations
 User.belongsToMany(Skill, { through: UserSkill, as: "skills" });
@@ -29,4 +30,5 @@ module.exports = {
   Skill,
   UserSkill,
   Assignment,
+  AspiredRole,
 };

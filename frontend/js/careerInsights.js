@@ -1,24 +1,23 @@
-const insights = [
-  {
-    title: "Top In-Demand Roles 2025",
-    detail: "AI Engineers, Cloud Architects, Cybersecurity Experts",
-  },
-  {
-    title: "Skills with Highest Growth",
-    detail: "Python, React, Data Analytics",
-  },
-  {
-    title: "Recommended Certifications",
-    detail: "AWS, Azure, TensorFlow Developer",
-  },
-];
+async function loadInsights() {
+  const container = document.getElementById("insightsContainer");
+  try {
+    const res = await fetch("http://localhost:4000/api/career-insights");
+    const data = await res.json();
 
-const container = document.getElementById("insightContainer");
-insights.forEach((i) => {
-  const div = document.createElement("div");
-  div.className = "bg-[#2b2b2b] p-5 rounded-xl shadow-md";
-  div.innerHTML = `
-    <h3 class="text-yellow-400 text-lg font-semibold">${i.title}</h3>
-    <p class="text-gray-300 mt-2">${i.detail}</p>`;
-  container.appendChild(div);
+    container.innerHTML = "";
+    data.forEach((insight) => {
+      const div = document.createElement("div");
+      div.className = "bg-[#2b2b2b] p-4 rounded-lg shadow-md";
+      div.innerHTML = `<h2 class="font-semibold text-lg mb-2">${insight.title}</h2>
+                       <p class="text-gray-400 text-sm">${insight.description}</p>`;
+      container.appendChild(div);
+    });
+  } catch (err) {
+    console.error("Failed to load insights:", err);
+    container.innerHTML = "<p class='text-red-400'>Unable to load insights</p>";
+  }
+}
+
+window.addEventListener("load", () => {
+  loadInsights();
 });
