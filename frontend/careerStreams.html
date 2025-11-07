@@ -21,7 +21,6 @@
     <nav
       class="bg-[#202020] flex justify-between items-center px-6 py-2 shadow-md"
     >
-      <!-- Left logos -->
       <div class="flex items-center space-x-4">
         <a href="login.html"
           ><img
@@ -37,9 +36,7 @@
         /></a>
       </div>
 
-      <!-- Right icons + Search -->
       <div class="flex items-center space-x-4 text-gray-300">
-        <!-- Notifications --><!-- Search -->
         <input
           type="search"
           id="search"
@@ -53,8 +50,6 @@
             class="w-6 h-6"
           />
         </a>
-
-        <!-- Profile -->
         <a href="myProfile.html">
           <img
             src="images/icon_profile.png"
@@ -62,15 +57,12 @@
             class="w-6 h-6"
           />
         </a>
-
-        <!-- Logout -->
         <a href="login.html">
           <img src="images/icon_logout.png" alt="Logout Icon" class="w-6 h-6" />
         </a>
       </div>
     </nav>
 
-    <!-- Main Layout -->
     <div class="flex flex-1 overflow-hidden">
       <!-- Sidebar -->
       <aside
@@ -78,7 +70,7 @@
       >
         <a
           href="xcelerate.html"
-          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2 hover:bg-gray-700 transition"
         >
           <img src="images/homepage.png" class="w-6 h-6 mb-1" alt="Dashboard" />
           <span class="text-center">Dashboard</span>
@@ -86,7 +78,7 @@
 
         <a
           href="aspiredRole.html"
-          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2 hover:bg-gray-700 transition"
         >
           <img
             src="images/aspireicon.png"
@@ -98,7 +90,7 @@
 
         <a
           href="currentOpenings.html"
-          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2 hover:bg-gray-700 transition"
         >
           <img src="images/open.jpg" class="w-6 h-6 mb-1" alt="Openings Icon" />
           <span class="text-center">Current Openings</span>
@@ -106,7 +98,7 @@
 
         <a
           href="careerInsights.html"
-          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2 hover:bg-gray-700 transition"
         >
           <img
             src="images/carrierInsight.png"
@@ -118,7 +110,7 @@
 
         <a
           href="careerStreams.html"
-          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2 hover:bg-gray-700 transition"
         >
           <img
             src="images/icon-career-streams.png"
@@ -130,7 +122,7 @@
 
         <a
           href="https://digitalprofile.ultimatix.net/DigitalProfile/#/profile"
-          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2 hover:bg-gray-700 transition"
         >
           <img
             src="images/new_profile_img.png"
@@ -141,8 +133,8 @@
         </a>
 
         <a
-          href="/frontend/findMentor.html"
-          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          href="findMentor.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2 hover:bg-gray-700 transition"
         >
           <img
             src="images/findMentor.png"
@@ -152,23 +144,7 @@
           <span class="text-center">Find Your Mentor</span>
         </a>
       </aside>
-      <script>
-        const currentPage = window.location.pathname.split("/").pop();
-        const sidebarLinks = document.querySelectorAll("aside a");
 
-        sidebarLinks.forEach((link) => {
-          if (link.getAttribute("href") === currentPage) {
-            link.classList.add(
-              "bg-gray-700",
-              "text-white",
-              "rounded-lg",
-              "py-1",
-              "transition-colors",
-              "duration-200"
-            );
-          }
-        });
-      </script>
       <!-- Dashboard Main Area -->
       <main class="flex-1 bg-[#1b1b1b] p-8 overflow-y-auto">
         <h1 class="text-2xl font-bold mb-6">Career Streams</h1>
@@ -176,26 +152,7 @@
         <div
           id="streamsContainer"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <div class="bg-[#2b2b2b] p-4 rounded-lg shadow-md">
-            <h2 class="font-semibold text-lg mb-2">Software Development</h2>
-            <p class="text-gray-400 text-sm">Frontend, Backend, Full Stack</p>
-          </div>
-
-          <div class="bg-[#2b2b2b] p-4 rounded-lg shadow-md">
-            <h2 class="font-semibold text-lg mb-2">Data & Analytics</h2>
-            <p class="text-gray-400 text-sm">
-              Data Science, Machine Learning, BI
-            </p>
-          </div>
-
-          <div class="bg-[#2b2b2b] p-4 rounded-lg shadow-md">
-            <h2 class="font-semibold text-lg mb-2">Cloud & DevOps</h2>
-            <p class="text-gray-400 text-sm">
-              AWS, Azure, GCP, CI/CD pipelines
-            </p>
-          </div>
-        </div>
+        ></div>
       </main>
     </div>
 
@@ -203,7 +160,6 @@
     <footer
       class="bg-[#202020] text-gray-400 text-sm border-t border-gray-700 w-full flex justify-between items-center py-3 px-6"
     >
-      <!-- Left: TCS Logo -->
       <div class="flex items-center">
         <img
           src="/frontend/images/TCS_White_2024.png"
@@ -211,8 +167,6 @@
           class="h-6 w-auto"
         />
       </div>
-
-      <!-- Right: Links and Build Info -->
       <div class="text-right">
         <div class="space-x-2 text-xs">
           <a href="#" class="hover:text-white">Third Party Notices</a> |
@@ -227,6 +181,64 @@
         </p>
       </div>
     </footer>
+
+    <!-- Scripts -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Highlight active sidebar link
+        const currentPage = window.location.pathname.split("/").pop();
+        const sidebarLinks = document.querySelectorAll("aside a");
+        sidebarLinks.forEach((link) => {
+          const href = link.getAttribute("href");
+          if (href && href.includes(currentPage)) {
+            link.classList.add(
+              "bg-gray-700",
+              "text-white",
+              "rounded-lg",
+              "transition-colors",
+              "duration-200"
+            );
+          }
+        });
+
+        // Fetch and display career streams from backend
+        fetch("http://localhost:4000/api/careers")
+          .then((res) => res.json())
+          .then((data) => {
+            const container = document.getElementById("streamsContainer");
+            container.innerHTML = "";
+
+            data.forEach((stream) => {
+              const card = document.createElement("div");
+              card.className =
+                "bg-[#2b2b2b] p-4 rounded-lg shadow-md hover:bg-[#333] transition duration-200";
+
+              card.innerHTML = `
+            <h2 class="font-semibold text-lg mb-2">${stream.stream}</h2>
+            <p class="text-gray-400 text-sm mb-2">${stream.description}</p>
+
+            <p class="text-yellow-400 text-sm font-semibold">Roles:</p>
+            <ul class="text-gray-400 text-sm list-disc ml-5 mb-2">
+              ${stream.roles.map((r) => `<li>${r}</li>`).join("")}
+            </ul>
+
+            <p class="text-yellow-400 text-sm font-semibold">Skills Required:</p>
+            <ul class="text-gray-400 text-sm list-disc ml-5">
+              ${stream.skillsRequired.map((s) => `<li>${s}</li>`).join("")}
+            </ul>
+          `;
+
+              container.appendChild(card);
+            });
+          })
+          .catch((error) => {
+            console.error("Error loading career streams:", error);
+            const container = document.getElementById("streamsContainer");
+            container.innerHTML =
+              '<p class="text-red-400">Error fetching career streams. Please try again later.</p>';
+          });
+      });
+    </script>
 
     <script src="js/xcelerate.js"></script>
   </body>
