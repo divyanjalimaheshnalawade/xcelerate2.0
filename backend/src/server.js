@@ -1,14 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 const { sequelize } = require("./models");
-
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
 const projectRoutes = require("./routes/projects");
 const skillRoutes = require("./routes/skills");
 const aspiredRoleRoutes = require("./routes/aspiredRoleRoutes");
+const careerRoutes = require("./routes/careerRoutes");
+const currentOpeningsRoutes = require("./routes/currentOpenings");
 
 const app = express();
 app.use(cors({ origin: "*" }));
@@ -20,7 +21,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/aspired-role", aspiredRoleRoutes);
-
+app.use("/api/careers", careerRoutes);
+app.use("/api/currentOpenings", currentOpeningsRoutes);
 // simple health
 app.get("/api/health", (req, res) => res.json({ ok: true }));
 

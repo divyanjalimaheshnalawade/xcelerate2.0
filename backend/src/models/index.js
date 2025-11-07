@@ -7,7 +7,10 @@ const Skill = require("./skill")(sequelize);
 const UserSkill = require("./userSkill")(sequelize);
 const Assignment = require("./assignment")(sequelize);
 const AspiredRole = require("./aspiredRole")(sequelize, Sequelize.DataTypes); // <-- IMPORT IT
-
+const CurrentOpening = require("./currentOpening")(
+  sequelize,
+  Sequelize.DataTypes
+);
 // Associations
 User.belongsToMany(Skill, { through: UserSkill, as: "skills" });
 Skill.belongsToMany(User, { through: UserSkill, as: "users" });
@@ -31,4 +34,5 @@ module.exports = {
   UserSkill,
   Assignment,
   AspiredRole,
+  CurrentOpening,
 };
