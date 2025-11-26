@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Profile - Xcelerate</title>
+    <link
+      rel="shortcut icon"
+      href="../images/XcerelateIcon.png"
+      type="image/x-icon"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-[#1b1b1b] text-white min-h-screen flex flex-col">
+    <nav
+      class="bg-[#202020] flex justify-between items-center px-6 py-2 shadow-md"
+    >
+      <div class="flex items-center space-x-4">
+        <a href="../pages/login.html"
+          ><img
+            src="../images/Ultimatixlogo.png"
+            alt="Ultimatix Logo"
+            class="w-[120px]"
+        /></a>
+        <a href="xcelerate.html"
+          ><img
+            src="../images/Xcelerate-NBG.png"
+            alt="Xcelerate Logo"
+            class="w-[120px]"
+        /></a>
+      </div>
+
+      <div class="flex items-center space-x-4 text-gray-300">
+        <input
+          type="search"
+          id="search"
+          placeholder="Search..."
+          class="ml-4 px-3 py-1 rounded-md bg-[#1b1b1b] border border-gray-600 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+        />
+        <a href="notifications.html"
+          ><img
+            src="../images/icon_notification_none.png"
+            alt="Notifications Icon"
+            class="w-6 h-6"
+        /></a>
+        <a href="myProfile.html"
+          ><img
+            src="../images/icon_profile.png"
+            alt="Profile Icon"
+            class="w-6 h-6"
+        /></a>
+        <a href="../pages/login.html"
+          ><img
+            src="../images/icon_logout.png"
+            alt="Logout Icon"
+            class="w-6 h-6"
+        /></a>
+      </div>
+    </nav>
+
+    <div class="flex flex-1 overflow-hidden">
+      <aside
+        class="bg-[#2b2b2b] w-20 flex flex-col items-center py-4 space-y-5"
+      >
+        <a
+          href="xcelerate.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/homepage.png"
+            class="w-6 h-6 mb-1"
+            alt="Dashboard"
+          /><span class="text-center">Dashboard</span></a
+        >
+        <a
+          href="aspiredRole.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/aspireicon.png"
+            class="w-6 h-6 mb-1"
+            alt="Aspired Role Icon"
+          /><span class="text-center">Your Aspire Role</span></a
+        >
+        <a
+          href="currentOpenings.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/open.jpg"
+            class="w-6 h-6 mb-1"
+            alt="Openings Icon"
+          /><span class="text-center">Current Openings</span></a
+        >
+        <a
+          href="careerInsights.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/carrierInsight.png"
+            class="w-6 h-6 mb-1"
+            alt="Insights Icon"
+          /><span class="text-center">Career Insights</span></a
+        >
+        <a
+          href="careerStreams.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/icon-career-streams.png"
+            class="w-6 h-6 mb-1"
+            alt="Streams Icon"
+          /><span class="text-center">Career Streams</span></a
+        >
+        <a
+          href="https://digitalprofile.ultimatix.net/DigitalProfile/#/profile"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/new_profile_img.png"
+            class="w-6 h-6 mb-1"
+            alt="Profile Icon"
+          /><span class="text-center">Profile</span></a
+        >
+        <a
+          href="findMentor.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/findMentor.png"
+            class="w-6 h-6 mb-1"
+            alt="Mentor Icon"
+          /><span class="text-center">Find Your Mentor</span></a
+        >
+      </aside>
+
+      <main class="flex-1 bg-[#1b1b1b] p-8 overflow-y-auto">
+        <h1 class="text-2xl font-bold mb-6">My Profile</h1>
+
+        <div class="bg-[#2b2b2b] p-6 rounded-lg shadow max-w-3xl">
+          <div class="flex items-center gap-6">
+            <img
+              src="../images/icon_profile.png"
+              alt="avatar"
+              class="w-20 h-20 rounded-full bg-gray-700 p-2"
+            />
+            <div>
+              <p class="text-gray-300 text-lg font-semibold" id="profileName">
+                User Name
+              </p>
+              <p class="text-gray-400 text-sm" id="profileRole">
+                Support Executive
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="text-gray-400 text-sm"><strong>Email</strong></p>
+              <p class="text-gray-300">user@example.com</p>
+            </div>
+            <div>
+              <p class="text-gray-400 text-sm"><strong>Location</strong></p>
+              <p class="text-gray-300">Pune, India</p>
+            </div>
+
+            <div class="md:col-span-2">
+              <p class="text-gray-400 text-sm"><strong>Skills</strong></p>
+              <p class="text-gray-300" id="profileSkills">
+                React, Node.js, SQL
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <button
+              id="editProfileBtn"
+              class="bg-yellow-500 text-black px-4 py-2 rounded"
+            >
+              Edit Profile
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer
+      class="bg-[#202020] text-gray-400 text-sm border-t border-gray-700 w-full flex justify-between items-center py-3 px-6"
+    >
+      <div class="flex items-center">
+        <img
+          src="../images/TCS_White_2024.png"
+          alt="TCS Logo"
+          class="h-6 w-auto"
+        />
+      </div>
+      <div class="text-right">
+        <div class="space-x-2 text-xs">
+          <a href="#" class="hover:text-white">Third Party Notices</a> |
+          <a href="#" class="hover:text-white">Privacy Policy</a> |
+          <a href="#" class="hover:text-white">Terms of Use</a> |
+          <a href="#" class="hover:text-white"
+            >Browser and Display Compatibility</a
+          >
+        </div>
+        <p class="mt-1 text-xs">
+          Build No: 2.0.24-7-5f5e170 | © 2025 Tata Consultancy Services
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      document
+        .getElementById("editProfileBtn")
+        .addEventListener("click", () => {
+          alert(
+            "Profile editing is not yet implemented. This will open a form in future."
+          );
+        });
+    </script>
+
+    <script src="../js/xcelerate.js"></script>
+  </body>
+</html>

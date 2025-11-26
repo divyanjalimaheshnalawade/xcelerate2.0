@@ -1,0 +1,25 @@
+Role,RequiredSkills
+Front-End Developer,HTML; CSS; JavaScript; TypeScript; React.js; Angular; Vue.js; Svelte; Tailwind CSS; Bootstrap; Next.js; Gatsby; Communication; collaboration; adaptability; creativity
+Back-End Developer,Node.js; Express; Python (Django; Flask; FastAPI); Java (Spring Boot); Ruby on Rails; PHP (Laravel); .NET Core; Go; Rust; SQL; REST & GraphQL APIs; Analytical thinking; problem-solving; teamwork; time management
+Full Stack Developer,HTML; CSS; JavaScript; React.js; Node.js; LAMP; JAMstack; version control (Git); Docker; CI/CD tools; Multitasking; organization; adaptability; teamwork
+Mobile App Developer,Android (Kotlin; Java); iOS (Swift; Objective-C); Flutter; React Native; Xamarin; Ionic; Persistence; adaptability; communication; creativity
+DevOps Engineer,Jenkins; GitHub Actions; GitLab CI; Docker; Kubernetes; Terraform; Ansible; Chef; Puppet; AWS; Azure; GCP; Prometheus; ELK Stack; Analytical skills; teamwork; automation mindset; communication
+Cloud Architect,AWS (EC2; Lambda; S3); Azure; GCP; CloudFormation; Terraform; Kubernetes; Docker; API Gateway; serverless stack; Strategic thinking; presentation; leadership; consultancy
+Database Administrator,MySQL; PostgreSQL; Oracle; MongoDB; Cassandra; Redis; DynamoDB; SQL; backup/recovery platforms; database monitoring tools; Patience; attention to detail; problem-solving; communication
+SRE,Prometheus; Grafana; Splunk; ELK Stack; Datadog; automation scripts; Linux/Unix; Ansible; incident management platforms; Stress tolerance; reliability; teamwork; analytical thinking
+QA Engineer,Selenium; Cypress; Jest; Mocha; JUnit; TestNG; Postman; Cucumber; automated/manual testing tools; bug trackers; Attention to detail; critical thinking; patience; organization
+ERP Consultant,SAP; Oracle ERP; Microsoft Dynamics; SQL; reporting tools; business process automation platforms; Analytical skills; presentation; documentation; problem-solving
+Salesforce Developer,Salesforce; Apex; Lightning; Visualforce; integration tools; REST/SOAP APIs; Problem-solving; collaboration; communication
+Solution Architect,Mix of AWS; Azure; GCP; Salesforce; enterprise integration platforms; security tools; Docker; Kubernetes; Strategic vision; leadership; architecture thinking
+Game Developer,Unity; Unreal Engine; Godot; C#; C++; Blender; 3D modeling/animation tools; shaders; game engines; Storytelling; collaboration; creativity; patience
+Data Scientist,Python; R; TensorFlow; PyTorch; Pandas; NumPy; Scikit-learn; visualization tools; BigQuery; databases; Curiosity; critical thinking; storytelling; problem-solving
+Info Security Analyst,SIEM (Splunk; ArcSight); firewalls; encryption platforms; vulnerability scanners; IDS/IPS; Linux; scripting; Integrity; vigilance; analytical skills; communication
+IT Manager,ITIL; project management tools; budgeting platforms; infrastructure (cloud/hybrid); security suite tools; Leadership; planning; decision-making; communication
+System Administrator,Linux; Windows Server; Active Directory; PowerShell; Bash; virtualization platforms (VMware; Hyper-V); monitoring tools; Troubleshooting; organization; reliability; attention to detail
+UI/UX Designer,Figma; Sketch; Adobe XD; InVision; prototyping/testing tools; graphic design suites; Empathy; visual design; creativity; teamwork
+Technical Writer,Confluence; Markdown; Swagger/OpenAPI; diagramming tools (Lucidchart); documentation platforms; Clarity; research; editing; organization
+Product Owner,Agile/SCRUM tools (Jira; Trello); documentation tools; backlog management; analytics tools; Leadership; stakeholder management; prioritization
+Project Manager,Project management & Gantt tools; budgeting/ERP tools; collaboration suites; Leadership; negotiation; planning; resource allocation
+IT Recruiter,ATS; LinkedIn; sourcing platforms; HRIS; video interview tools; Networking; persuasion; negotiation; people skills
+App Support Engineer,SQL; PowerShell; integration platforms; log analysis tools; Documentation; communication; patience; troubleshooting
+Help Desk Technician,OS troubleshooting; ticketing systems; Office suite; application support; hardware/software; customer service; active listening; patience; interpersonal skills

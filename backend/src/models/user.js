@@ -10,9 +10,16 @@ module.exports = (sequelize) => {
       email: { type: DataTypes.STRING, unique: true, allowNull: false },
       password: { type: DataTypes.STRING, allowNull: false },
       role: { type: DataTypes.STRING, defaultValue: "employee" }, // employee/admin/mentor
-      aspired_role: { type: DataTypes.STRING },
+      aspired_role: { type: DataTypes.STRING }, // target career goal
       experience_years: { type: DataTypes.FLOAT, defaultValue: 0 },
       bio: { type: DataTypes.TEXT },
+
+      // ✅ NEW FIELD for AI-driven matching
+      current_skills: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        defaultValue: [], // e.g., ["HTML", "CSS", "JavaScript"]
+      },
     },
     {
       tableName: "users",
@@ -31,6 +38,7 @@ module.exports = (sequelize) => {
     }
   );
 
+  // ✅ Password validation helper
   User.prototype.validatePassword = async function (password) {
     return bcrypt.compare(password, this.password);
   };

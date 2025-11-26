@@ -5,18 +5,57 @@ const sequelize = require("../config/db"); // your sequelize instance
 const AspiredRole = require("../models/aspiredRole")(sequelize); // ✅ call the function
 
 // Save aspired role
-router.post("/", async (req, res) => {
+router.post("/analyze", async (req, res) => {
   try {
-    const { role, timeFrame, technologies } = req.body;
-    const saved = await AspiredRole.create({
-      role,
-      timeFrame,
-      technologies: JSON.stringify(technologies),
+    console.log("🟢 Incoming Skill Gap Request:", req.body);
+
+    const { aspiredRole } = req.body;
+    if (!aspiredRole)
+      return res.status(400).json({ message: "aspiredRole is required" });
+
+    console.log("🔍 Looking up Role for:", aspiredRole);
+
+    // Fetch Role and Skills
+    const role = await Role.findOne({
+      where: { title: aspiredRole },
+      include: [{ model: Skill, as: "requiredSkills" }],
     });
-    res.status(201).json(saved);
-  } catch (error) {
-    console.error("Error saving aspired role:", error);
-    res.status(500).json({ error: "Server error" });
+
+    console.log("📘 Role found:", role ? role.title : "none");
+
+    if (!role)
+      return res.status(404).json({ message: "Role not found in database" });
+
+    console.log("🧩 Required skills:", role.requiredSkills);
+
+    const requiredSkillNames = role.requiredSkills.map((s) => s.name);
+    console.log("✅ Required skill names:", requiredSkillNames);
+
+    // Static current skills for now
+    const userSkills = ["JavaScript", "React", "HTML", "CSS"];
+    console.log("🧠 User skills:", userSkills);
+
+    const missingSkills = requiredSkillNames.filter(
+      (s) => !userSkills.includes(s)
+    );
+    const matchPercentage = Math.round(
+      ((requiredSkillNames.length - missingSkills.length) /
+        requiredSkillNames.length) *
+        100
+    );
+
+    console.log("📊 Match:", matchPercentage, "%");
+
+    res.json({
+      aspiredRole,
+      userSkills,
+      requiredSkills: requiredSkillNames,
+      missingSkills,
+      matchPercentage,
+    });
+  } catch (err) {
+    console.error("❌ Skill Gap Analysis Failed:", err);
+    res.status(500).json({ message: "Error performing skill gap analysis" });
   }
 });
 

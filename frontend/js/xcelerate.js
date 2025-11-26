@@ -1,8 +1,37 @@
-const BACKEND_URL = "http://localhost:4000"; // backend is on port 4000
+// ======================================================
+// XCELERATE — SHARED FRONTEND SCRIPT
+// Loaded on ALL pages
+// ======================================================
 
-const aspiredRoleDisplay = document.getElementById("aspiredRoleDisplay");
+// ------------------------------------------------------
+// Backend URL (adjust for deployment later)
+// ------------------------------------------------------
+const BACKEND_URL = "http://localhost:4000";
 
+// ------------------------------------------------------
+// 1. Active Sidebar Link Highlighting
+// ------------------------------------------------------
+function activateSidebarLinks() {
+  const currentPage = window.location.pathname.split("/").pop(); // e.g. "careerInsights.html"
+  const links = document.querySelectorAll(".sidebar a");
+
+  links.forEach((link) => {
+    const linkPage = link.getAttribute("href").split("/").pop();
+    if (linkPage === currentPage) {
+      link.classList.add("bg-gray-700", "text-yellow-300", "font-semibold");
+    } else {
+      link.classList.remove("bg-gray-700", "text-yellow-300", "font-semibold");
+    }
+  });
+}
+
+// ------------------------------------------------------
+// 2. Load Aspired Role (Dashboard Only)
+// ------------------------------------------------------
 async function loadAspiredRole() {
+  const aspiredRoleDisplay = document.getElementById("aspiredRoleDisplay");
+  if (!aspiredRoleDisplay) return; // Prevent errors on pages without it
+
   try {
     const res = await fetch(`${BACKEND_URL}/api/aspired-role`);
     const data = await res.json();
@@ -29,54 +58,34 @@ async function loadAspiredRole() {
     }
   } catch (err) {
     console.error("Failed to fetch aspired role:", err);
-    if (aspiredRoleDisplay)
-      aspiredRoleDisplay.textContent = "❌ Could not load aspired role";
+    aspiredRoleDisplay.textContent = "❌ Could not load aspired role";
   }
 }
 
-// ----------------------------
-// Backend health check
-// ----------------------------
+// ------------------------------------------------------
+// 3. Backend Health Indicator
+// ------------------------------------------------------
 function checkBackendHealth() {
+  const statusEl = document.getElementById("backend-status");
+  if (!statusEl) return; // Skip if element does not exist
+
   fetch(`${BACKEND_URL}/api/health`)
     .then((res) => res.json())
     .then((data) => {
-      const statusEl = document.getElementById("backend-status");
-      if (statusEl) {
-        statusEl.textContent = data.ok
-          ? "✅ Backend Connected"
-          : "❌ Connection Failed";
-      }
+      statusEl.textContent = data.ok
+        ? "✅ Backend Connected"
+        : "❌ Connection Failed";
     })
-    .catch((err) => {
-      console.error("Backend not reachable:", err);
-      const statusEl = document.getElementById("backend-status");
-      if (statusEl) {
-        statusEl.textContent = "❌ Backend Offline";
-      }
+    .catch(() => {
+      statusEl.textContent = "❌ Backend Offline";
     });
 }
 
-// ----------------------------
-// Dummy data for dashboard stats
-// ----------------------------
-function loadDashboardStats() {
-  const matchCount = document.getElementById("matchCount");
-  const skillProgress = document.getElementById("skillProgress");
-  const pendingCourses = document.getElementById("pendingCourses");
-
-  if (matchCount && skillProgress && pendingCourses) {
-    matchCount.textContent = Math.floor(Math.random() * 10) + 1;
-    skillProgress.textContent = `${Math.floor(Math.random() * 100)}%`;
-    pendingCourses.textContent = Math.floor(Math.random() * 5);
-  }
-}
-
-// ----------------------------
-// Initialize on window load
-// ----------------------------
-window.addEventListener("load", () => {
+// ------------------------------------------------------
+// 4. Initialize on page load
+// ------------------------------------------------------
+window.addEventListener("DOMContentLoaded", () => {
+  activateSidebarLinks();
   loadAspiredRole();
-  loadDashboardStats();
   checkBackendHealth();
 });

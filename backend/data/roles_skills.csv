@@ -1,0 +1,30 @@
+Role,RequiredSkills
+IT Manager,ITIL; project management; budgeting; infrastructure; vendor management; security; leadership; communication; planning; decision-making; problem-solving
+System Administrator,Windows; Linux; server setup; Active Directory; PowerShell; Bash scripting; hardware management; organization; attention to detail; troubleshooting; reliability
+Network Engineer,TCP/IP; routing; switching; VPN; firewalls; Cisco; Juniper; network monitoring; analytical thinking; teamwork; adaptability; documentation
+Database Administrator,SQL; MySQL; Oracle; backup/recovery; performance tuning; database security; problem-solving; attention to detail; patience; communication
+Help Desk Technician,OS troubleshooting; ticketing systems; Office suite; application support; hardware/software; customer service; active listening; patience; interpersonal skills
+Front-End Developer,HTML; CSS; JavaScript; React; Angular; UI/UX design; responsive websites; creativity; collaboration; adaptability; communication
+Back-End Developer,Node.js; Python; Java; API development; databases; security; cloud services; logical reasoning; teamwork; problem-solving; time management
+Full Stack Developer,Front-end and back-end tech; API integration; database management; version control (Git); multitasking; adaptability; collaboration; organization
+DevOps Engineer,CI/CD; Jenkins; Docker; Kubernetes; scripting; cloud platforms (AWS; Azure; GCP); automation; analytical skills; adaptability; teamwork; communication
+Cloud Solutions Architect,AWS; Azure; GCP; distributed systems; architecture design; cloud migration; security; presentation; strategic thinking; leadership; consultancy
+Info Security Analyst,SIEM; firewalls; incident response; risk assessment; vulnerability management; encryption; ethical hacking; integrity; vigilance; analytical thinking; communication
+Data Scientist,Python; R; machine learning; data analytics; statistics; visualization; databases; storytelling; critical thinking; curiosity; problem-solving
+Machine Learning Engineer,Python; TensorFlow; PyTorch; ML algorithms; deep learning; automation; big data; innovation; logical thinking; adaptability; communication
+UI/UX Designer,Sketch; Figma; Adobe XD; prototyping; usability testing; graphic design; empathy; creativity; teamwork; adaptability; communication
+QA Engineer,Selenium; manual/automated testing; scripting; bug tracking; regression testing; continuous integration; attention to detail; patience; critical thinking; organization
+Product Owner,Agile; SCRUM; backlog management; requirements analysis; project documentation; leadership; stakeholder management; decision-making; prioritization
+SCRUM Master,Agile; SCRUM; facilitation; project planning; conflict management; facilitation; motivation; conflict resolution; teamwork
+Project Manager,PMP; budgeting; resource allocation; Gantt charts; project management software; leadership; planning; negotiation; communication
+App Support Engineer,SQL; troubleshooting; PowerShell; integration tools; log analysis; documentation; problem-solving; communication; patience
+Business Analyst,Documentation; analytics; SQL; requirements; process mapping; business intelligence; communication; stakeholder analysis; critical thinking; facilitation
+Mobile App Developer,Android; iOS; React Native; Flutter; REST APIs; UI/UX testing; creativity; persistence; adaptability; communication
+IT Support Specialist,Diagnosing hardware/software; ticketing; network basics; virus removal; empathy; patience; problem-solving; customer focus
+SRE,Monitoring; automation; scripting; incident management; reliability engineering; analytical skills; teamwork; communication; stress tolerance
+ERP Consultant,SAP; Oracle ERP; SQL; business process; report generation; system config; analytical skills; presentation; documentation; problem-solving
+Salesforce Developer,Salesforce; Apex; Lightning; integration tools; automation; collaboration; problem-solving; communication
+Solution Architect,Systems architecture; cloud platforms; integration; security; leadership; strategic vision; leadership; collaboration; presentation
+Game Developer,Unity; Unreal; C#; C++; gameplay mechanics; 3D modeling; animation; storytelling; creativity; collaboration; patience
+Technical Writer,Documentation; writing; API docs; flowcharts; diagrams; editing; clarity; organization; attention to detail; research
+IT Recruiter,Sourcing; interviewing; negotiation; recruitment software (ATS); LinkedIn search; people skills; organization; networking; persuasion

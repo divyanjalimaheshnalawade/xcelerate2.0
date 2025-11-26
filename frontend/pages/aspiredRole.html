@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aspired Role - Xcelerate</title>
+    <link
+      rel="shortcut icon"
+      href="../images/XcerelateIcon.png"
+      type="image/x-icon"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://unpkg.com/lucide-static@latest/font/lucide.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-[#1b1b1b] text-white min-h-screen flex flex-col">
+    <!-- Top Navbar -->
+    <nav
+      class="bg-[#202020] flex justify-between items-center px-6 py-2 shadow-md"
+    >
+      <div class="flex items-center space-x-4">
+        <a href="../pages/login.html"
+          ><img
+            src="../images/Ultimatixlogo.png"
+            alt="Ultimatix Logo"
+            class="w-[120px]"
+        /></a>
+        <a href="xcelerate.html"
+          ><img
+            src="../images/Xcelerate-NBG.png"
+            alt="Xcelerate Logo"
+            class="w-[120px]"
+        /></a>
+      </div>
+
+      <div class="flex items-center space-x-4 text-gray-300">
+        <input
+          type="search"
+          id="search"
+          placeholder="Search..."
+          class="ml-4 px-3 py-1 rounded-md bg-[#1b1b1b] border border-gray-600 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+        />
+        <a href="notifications.html"
+          ><img
+            src="../images/icon_notification_none.png"
+            alt="Notifications Icon"
+            class="w-6 h-6"
+        /></a>
+        <a href="myProfile.html"
+          ><img
+            src="../images/icon_profile.png"
+            alt="Profile Icon"
+            class="w-6 h-6"
+        /></a>
+        <a href="../pages/login.html"
+          ><img
+            src="../images/icon_logout.png"
+            alt="Logout Icon"
+            class="w-6 h-6"
+        /></a>
+      </div>
+    </nav>
+
+    <div class="flex flex-1 overflow-hidden">
+      <!-- Sidebar -->
+      <aside
+        class="bg-[#2b2b2b] w-20 flex flex-col items-center py-4 space-y-5"
+      >
+        <a
+          href="xcelerate.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/homepage.png"
+            class="w-6 h-6 mb-1"
+            alt="Dashboard"
+          /><span class="text-center">Dashboard</span></a
+        >
+        <a
+          href="aspiredRole.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/aspireicon.png"
+            class="w-6 h-6 mb-1"
+            alt="Aspired Role Icon"
+          /><span class="text-center">Your Aspire Role</span></a
+        >
+        <a
+          href="currentOpenings.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/open.jpg"
+            class="w-6 h-6 mb-1"
+            alt="Openings Icon"
+          /><span class="text-center">Current Openings</span></a
+        >
+        <a
+          href="careerInsights.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/carrierInsight.png"
+            class="w-6 h-6 mb-1"
+            alt="Insights Icon"
+          /><span class="text-center">Career Insights</span></a
+        >
+        <a
+          href="careerStreams.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/icon-career-streams.png"
+            class="w-6 h-6 mb-1"
+            alt="Streams Icon"
+          /><span class="text-center">Career Streams</span></a
+        >
+        <a
+          href="https://digitalprofile.ultimatix.net/DigitalProfile/#/profile"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/new_profile_img.png"
+            class="w-6 h-6 mb-1"
+            alt="Profile Icon"
+          /><span class="text-center">Profile</span></a
+        >
+        <a
+          href="findMentor.html"
+          class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
+          ><img
+            src="../images/findMentor.png"
+            class="w-6 h-6 mb-1"
+            alt="Mentor Icon"
+          /><span class="text-center">Find Your Mentor</span></a
+        >
+      </aside>
+
+      <main
+        class="flex-1 bg-[#1b1b1b] flex justify-center items-start p-8 overflow-y-auto"
+      >
+        <div
+          class="bg-[#2b2b2b] p-8 rounded-2xl shadow-lg w-full max-w-2xl border border-gray-700"
+        >
+          <h2 class="text-2xl font-semibold mb-6 text-center text-yellow-400">
+            Add Your Aspired Role
+          </h2>
+
+          <form id="aspiredRoleForm" class="space-y-6">
+            <div>
+              <label for="roleInput" class="block text-gray-300 mb-1"
+                >Aspired Role</label
+              >
+              <div class="relative">
+                <input
+                  type="text"
+                  id="roleInput"
+                  placeholder="Type or select your aspired role..."
+                  autocomplete="off"
+                  required
+                  class="w-full px-3 py-2 rounded-md bg-[#1b1b1b] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                />
+                <ul
+                  id="roleSuggestions"
+                  class="absolute left-0 right-0 bg-[#2b2b2b] border border-gray-600 rounded-md mt-1 max-h-48 overflow-auto hidden z-10"
+                ></ul>
+              </div>
+            </div>
+
+            <div>
+              <label for="timeFrame" class="block text-gray-300 mb-1"
+                >Timeframe (months)</label
+              >
+              <input
+                type="number"
+                id="timeFrame"
+                min="1"
+                required
+                class="w-full px-3 py-2 rounded-md bg-[#1b1b1b] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              />
+            </div>
+
+            <div>
+              <label for="techInput" class="block text-gray-300 mb-1"
+                >Technologies to Learn (Select 5–7)</label
+              >
+              <div
+                id="techContainer"
+                class="flex flex-wrap gap-2 p-2 bg-[#1b1b1b] border border-gray-600 rounded-md"
+              >
+                <input
+                  type="text"
+                  id="techInput"
+                  placeholder="Type technology..."
+                  class="flex-1 bg-[#1b1b1b] text-white outline-none"
+                />
+              </div>
+              <ul
+                id="suggestions"
+                class="bg-[#2b2b2b] text-white border border-gray-600 mt-1 rounded-md max-h-40 overflow-auto hidden"
+              ></ul>
+              <p id="techWarning" class="text-red-400 text-sm mt-1 hidden">
+                Please select minimum of 5 and maximum of 7 technologies
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              class="bg-yellow-400 text-black px-4 py-2 rounded-md w-full hover:bg-yellow-500 transition"
+            >
+              Add Aspired Role
+            </button>
+
+            <div
+              id="message"
+              class="mt-4 text-sm text-center text-green-400"
+            ></div>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <footer
+      class="bg-[#202020] text-gray-400 text-sm border-t border-gray-700 w-full flex justify-between items-center py-3 px-6"
+    >
+      <div class="flex items-center">
+        <img
+          src="../images/TCS_White_2024.png"
+          alt="TCS Logo"
+          class="h-6 w-auto"
+        />
+      </div>
+      <div class="text-right">
+        <div class="space-x-2 text-xs">
+          <a href="#" class="hover:text-white">Third Party Notices</a> |
+          <a href="#" class="hover:text-white">Privacy Policy</a> |
+          <a href="#" class="hover:text-white">Terms of Use</a> |
+          <a href="#" class="hover:text-white"
+            >Browser and Display Compatibility</a
+          >
+        </div>
+        <p class="mt-1 text-xs">
+          Build No: 2.0.24-7-5f5e170 | © 2025 Tata Consultancy Services
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // client-side behavior for suggestions & chips (kept same as before, adapted)
+      const technologies = [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "React",
+        "Node.js",
+        "Python",
+        "AWS",
+        "Azure",
+        "Docker",
+        "Kubernetes",
+        "SQL",
+        "NoSQL",
+        "Git",
+        "CI/CD",
+        "Jenkins",
+        "Machine Learning",
+        "Data Science",
+        "TensorFlow",
+        "PyTorch",
+        "Linux",
+        "Windows",
+        "Networking",
+        "Security",
+        "DevOps",
+        "UI/UX",
+        "Figma",
+        "Selenium",
+        "Testing",
+        "Agile",
+        "SCRUM",
+      ];
+      const input = document.getElementById("techInput");
+      const suggestions = document.getElementById("suggestions");
+      const techContainer = document.getElementById("techContainer");
+      const warning = document.getElementById("techWarning");
+      let selectedTechs = [];
+
+      function renderSelected() {
+        techContainer.querySelectorAll(".chip").forEach((el) => el.remove());
+        selectedTechs.forEach((tech, i) => {
+          const chip = document.createElement("span");
+          chip.className =
+            "chip bg-yellow-500 text-black px-2 py-1 rounded-full text-sm inline-flex items-center";
+          chip.innerHTML = `${tech} <button class='ml-1 text-xs' data-index='${i}'>&times;</button>`;
+          techContainer.insertBefore(chip, input);
+        });
+        warning.classList.toggle(
+          "hidden",
+          selectedTechs.length >= 5 && selectedTechs.length <= 7
+        );
+      }
+
+      input.addEventListener("input", () => {
+        const query = input.value.toLowerCase().trim();
+        suggestions.innerHTML = "";
+        if (!query) {
+          suggestions.classList.add("hidden");
+          return;
+        }
+        const filtered = technologies.filter(
+          (tech) =>
+            tech.toLowerCase().includes(query) && !selectedTechs.includes(tech)
+        );
+        filtered.slice(0, 8).forEach((tech) => {
+          const li = document.createElement("li");
+          li.textContent = tech;
+          li.className =
+            "p-2 hover:bg-gray-700 cursor-pointer rounded transition duration-200";
+          li.addEventListener("click", () => {
+            if (selectedTechs.length >= 7) {
+              alert("You can select up to 7 technologies only!");
+              return;
+            }
+            selectedTechs.push(tech);
+            input.value = "";
+            suggestions.innerHTML = "";
+            renderSelected();
+          });
+          suggestions.appendChild(li);
+        });
+        suggestions.classList.remove("hidden");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !e.target.closest("#techInput") &&
+          !e.target.closest("#suggestions")
+        )
+          suggestions.classList.add("hidden");
+      });
+
+      techContainer.addEventListener("click", (e) => {
+        if (e.target.tagName === "BUTTON") {
+          const index = e.target.dataset.index;
+          selectedTechs.splice(index, 1);
+          renderSelected();
+        }
+      });
+
+      // roles autocomplete
+      const roles = [
+        "IT Manager",
+        "System Administrator",
+        "Network Engineer",
+        "Database Administrator",
+        "Front-End Developer",
+        "Back-End Developer",
+        "Full Stack Developer",
+        "DevOps Engineer",
+        "Cloud Solutions Architect",
+        "Data Scientist",
+        "Machine Learning Engineer",
+        "UI/UX Designer",
+        "QA Engineer",
+        "Product Owner",
+        "Project Manager",
+        "SRE",
+        "ERP Consultant",
+        "Salesforce Developer",
+        "Solution Architect",
+      ];
+      const roleInput = document.getElementById("roleInput");
+      const roleSuggestions = document.getElementById("roleSuggestions");
+
+      roleInput.addEventListener("input", () => {
+        const query = roleInput.value.toLowerCase().trim();
+        roleSuggestions.innerHTML = "";
+        if (!query) {
+          roleSuggestions.classList.add("hidden");
+          return;
+        }
+        const filtered = roles.filter((r) => r.toLowerCase().includes(query));
+        if (!filtered.length) {
+          roleSuggestions.classList.add("hidden");
+          return;
+        }
+        filtered.forEach((role) => {
+          const li = document.createElement("li");
+          li.textContent = role;
+          li.className =
+            "p-2 hover:bg-gray-700 cursor-pointer rounded transition duration-200";
+          li.addEventListener("click", () => {
+            roleInput.value = role;
+            roleSuggestions.classList.add("hidden");
+          });
+          roleSuggestions.appendChild(li);
+        });
+        roleSuggestions.classList.remove("hidden");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !e.target.closest("#roleInput") &&
+          !e.target.closest("#roleSuggestions")
+        )
+          roleSuggestions.classList.add("hidden");
+      });
+
+      // form submission (dummy, sends to backend if available)
+      document
+        .getElementById("aspiredRoleForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const role = document.getElementById("roleInput").value.trim();
+          const timeFrame = document.getElementById("timeFrame").value.trim();
+          if (selectedTechs.length < 5 || selectedTechs.length > 7) {
+            warning.classList.remove("hidden");
+            return;
+          }
+          const payload = { role, timeFrame, technologies: selectedTechs };
+          try {
+            const res = await fetch("http://localhost:4000/api/aspired-role", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+            if (res.ok) {
+              document.getElementById("message").textContent =
+                "✅ Aspired role saved!";
+              selectedTechs = [];
+              renderSelected();
+              e.target.reset();
+            } else {
+              document.getElementById("message").textContent = `❌ ${
+                data.error || "Failed"
+              }`;
+            }
+          } catch (err) {
+            console.error(err);
+            document.getElementById("message").textContent =
+              "❌ Failed to save aspired role (backend unreachable)";
+          }
+        });
+
+      renderSelected();
+    </script>
+
+    <script src="../js/xcelerate.js"></script>
+  </body>
+</html>
