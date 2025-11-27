@@ -69,3 +69,14 @@ CREATE TABLE assignments (
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (project_id) REFERENCES projects(id)
 );
+
+CREATE TABLE aspired_roles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  role VARCHAR(255) NOT NULL,
+  timeframe INT NOT NULL,
+  technologies TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

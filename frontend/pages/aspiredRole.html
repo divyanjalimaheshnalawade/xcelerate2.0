@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Aspired Role - Xcelerate</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aspired Role</title>
     <link
       rel="shortcut icon"
-      href="../images/XcerelateIcon.png"
+      href="/frontend/images/XcerelateIcon.png"
       type="image/x-icon"
     />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,130 +21,182 @@
     <nav
       class="bg-[#202020] flex justify-between items-center px-6 py-2 shadow-md"
     >
+      <!-- Left logos -->
       <div class="flex items-center space-x-4">
-        <a href="../pages/login.html"
+        <a href="login.html"
           ><img
-            src="../images/Ultimatixlogo.png"
+            src="/frontend/images/Ultimatixlogo.png"
             alt="Ultimatix Logo"
             class="w-[120px]"
         /></a>
         <a href="xcelerate.html"
           ><img
-            src="../images/Xcelerate-NBG.png"
+            src="/frontend/images/Xcelerate-NBG.png"
             alt="Xcelerate Logo"
             class="w-[120px]"
         /></a>
       </div>
 
+      <!-- Right icons + Search -->
       <div class="flex items-center space-x-4 text-gray-300">
+        <!-- Notifications --><!-- Search -->
         <input
           type="search"
           id="search"
           placeholder="Search..."
           class="ml-4 px-3 py-1 rounded-md bg-[#1b1b1b] border border-gray-600 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
         />
-        <a href="notifications.html"
-          ><img
-            src="../images/icon_notification_none.png"
+        <a href="notifications.html">
+          <img
+            src="/frontend/images/icon_notification_none.png"
             alt="Notifications Icon"
             class="w-6 h-6"
-        /></a>
-        <a href="myProfile.html"
-          ><img
-            src="../images/icon_profile.png"
+          />
+        </a>
+
+        <!-- Profile -->
+        <a href="myProfile.html">
+          <img
+            src="/frontend/images/icon_profile.png"
             alt="Profile Icon"
             class="w-6 h-6"
-        /></a>
-        <a href="../pages/login.html"
-          ><img
-            src="../images/icon_logout.png"
+          />
+        </a>
+
+        <!-- Logout -->
+        <a href="login.html">
+          <img
+            src="/frontend/images/icon_logout.png"
             alt="Logout Icon"
             class="w-6 h-6"
-        /></a>
+          />
+        </a>
       </div>
     </nav>
 
+    <!-- Main Layout -->
+    <!-- Sidebar -->
     <div class="flex flex-1 overflow-hidden">
-      <!-- Sidebar -->
       <aside
         class="bg-[#2b2b2b] w-20 flex flex-col items-center py-4 space-y-5"
       >
         <a
-          href="xcelerate.html"
+          href="/frontend/pages/xcelerate.html"
           class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
-          ><img
-            src="../images/homepage.png"
+        >
+          <img
+            src="/frontend/images/homepage.png"
             class="w-6 h-6 mb-1"
             alt="Dashboard"
-          /><span class="text-center">Dashboard</span></a
-        >
+          />
+          <span class="text-center">Dashboard</span>
+        </a>
+
         <a
-          href="aspiredRole.html"
+          href="/frontend/pages/aspiredRole.html"
           class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
-          ><img
-            src="../images/aspireicon.png"
+        >
+          <img
+            src="/frontend/images/aspireicon.png"
             class="w-6 h-6 mb-1"
             alt="Aspired Role Icon"
-          /><span class="text-center">Your Aspire Role</span></a
-        >
+          />
+          <span class="text-center">Your Aspire Role</span>
+        </a>
+
         <a
-          href="currentOpenings.html"
+          href="/frontend/pages/currentOpenings.html"
           class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
-          ><img
-            src="../images/open.jpg"
+        >
+          <img
+            src="/frontend/images/open.jpg"
             class="w-6 h-6 mb-1"
             alt="Openings Icon"
-          /><span class="text-center">Current Openings</span></a
-        >
+          />
+          <span class="text-center">Current Openings</span>
+        </a>
+
         <a
-          href="careerInsights.html"
+          href="/frontend/pages/careerInsights.html"
           class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
-          ><img
-            src="../images/carrierInsight.png"
+        >
+          <img
+            src="/frontend/images/carrierInsight.png"
             class="w-6 h-6 mb-1"
             alt="Insights Icon"
-          /><span class="text-center">Career Insights</span></a
-        >
+          />
+          <span class="text-center">Career Insights</span>
+        </a>
+
         <a
-          href="careerStreams.html"
+          href="/frontend/pages/careerStreams.html"
           class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
-          ><img
-            src="../images/icon-career-streams.png"
+        >
+          <img
+            src="/frontend/images/icon-career-streams.png"
             class="w-6 h-6 mb-1"
             alt="Streams Icon"
-          /><span class="text-center">Career Streams</span></a
-        >
+          />
+          <span class="text-center">Career Streams</span>
+        </a>
+
         <a
           href="https://digitalprofile.ultimatix.net/DigitalProfile/#/profile"
           class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
-          ><img
-            src="../images/new_profile_img.png"
+        >
+          <img
+            src="/frontend/images/new_profile_img.png"
             class="w-6 h-6 mb-1"
             alt="Profile Icon"
-          /><span class="text-center">Profile</span></a
-        >
+          />
+          <span class="text-center">Profile</span>
+        </a>
+
         <a
-          href="findMentor.html"
+          href="/frontend/pages/findMentor.html"
           class="sidebar-link flex flex-col items-center text-gray-300 text-xs w-full py-2"
-          ><img
-            src="../images/findMentor.png"
+        >
+          <img
+            src="/frontend/images/findMentor.png"
             class="w-6 h-6 mb-1"
             alt="Mentor Icon"
-          /><span class="text-center">Find Your Mentor</span></a
-        >
+          />
+          <span class="text-center">Find Your Mentor</span>
+        </a>
       </aside>
 
-      <main
-        class="flex-1 bg-[#1b1b1b] flex justify-center items-start p-8 overflow-y-auto"
-      >
+      <script>
+        // Get the current page file name
+        const currentPage = window.location.pathname.split("/").pop();
+
+        // Select all sidebar links
+        const sidebarLinks = document.querySelectorAll(".sidebar-link");
+
+        sidebarLinks.forEach((link) => {
+          const linkPage = link.getAttribute("href").split("/").pop(); // last part of href
+          if (linkPage === currentPage) {
+            link.classList.add(
+              "bg-gray-700",
+              "text-white",
+              "rounded-lg",
+              "transition-colors",
+              "duration-200"
+            );
+          }
+        });
+      </script>
+
+      <!-- Dashboard Main Area -->
+      <main class="flex-1 bg-[#1b1b1b] flex justify-center items-center p-8">
         <div
-          class="bg-[#2b2b2b] p-8 rounded-2xl shadow-lg w-full max-w-2xl border border-gray-700"
+          class="bg-[#2b2b2b] p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-700"
         >
           <h2 class="text-2xl font-semibold mb-6 text-center text-yellow-400">
             Add Your Aspired Role
           </h2>
 
           <form id="aspiredRoleForm" class="space-y-6">
+            <!-- Aspired Role Field -->
             <div>
               <label for="roleInput" class="block text-gray-300 mb-1"
                 >Aspired Role</label
@@ -165,10 +217,11 @@
               </div>
             </div>
 
+            <!-- Timeframe -->
             <div>
-              <label for="timeFrame" class="block text-gray-300 mb-1"
-                >Timeframe (months)</label
-              >
+              <label for="timeFrame" class="block text-gray-300 mb-1">
+                Timeframe (months)
+              </label>
               <input
                 type="number"
                 id="timeFrame"
@@ -178,10 +231,12 @@
               />
             </div>
 
+            <!-- Technologies -->
             <div>
-              <label for="techInput" class="block text-gray-300 mb-1"
-                >Technologies to Learn (Select 5–7)</label
-              >
+              <label for="techInput" class="block text-gray-300 mb-1">
+                Technologies to Learn (Select 5–7)
+              </label>
+
               <div
                 id="techContainer"
                 class="flex flex-wrap gap-2 p-2 bg-[#1b1b1b] border border-gray-600 rounded-md"
@@ -193,6 +248,7 @@
                   class="flex-1 bg-[#1b1b1b] text-white outline-none"
                 />
               </div>
+
               <ul
                 id="suggestions"
                 class="bg-[#2b2b2b] text-white border border-gray-600 mt-1 rounded-md max-h-40 overflow-auto hidden"
@@ -202,6 +258,7 @@
               </p>
             </div>
 
+            <!-- Submit Button -->
             <button
               type="submit"
               class="bg-yellow-400 text-black px-4 py-2 rounded-md w-full hover:bg-yellow-500 transition"
@@ -218,16 +275,20 @@
       </main>
     </div>
 
+    <!-- Footer -->
     <footer
       class="bg-[#202020] text-gray-400 text-sm border-t border-gray-700 w-full flex justify-between items-center py-3 px-6"
     >
+      <!-- Left: TCS Logo -->
       <div class="flex items-center">
         <img
-          src="../images/TCS_White_2024.png"
+          src="/frontend/images/TCS_White_2024.png"
           alt="TCS Logo"
           class="h-6 w-auto"
         />
       </div>
+
+      <!-- Right: Links and Build Info -->
       <div class="text-right">
         <div class="space-x-2 text-xs">
           <a href="#" class="hover:text-white">Third Party Notices</a> |
@@ -243,207 +304,464 @@
       </div>
     </footer>
 
+    <script src="/frontend/js/xcelerate.js"></script>
+
     <script>
-      // client-side behavior for suggestions & chips (kept same as before, adapted)
-      const technologies = [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "React",
-        "Node.js",
-        "Python",
-        "AWS",
-        "Azure",
-        "Docker",
-        "Kubernetes",
-        "SQL",
-        "NoSQL",
-        "Git",
-        "CI/CD",
-        "Jenkins",
-        "Machine Learning",
-        "Data Science",
-        "TensorFlow",
-        "PyTorch",
-        "Linux",
-        "Windows",
-        "Networking",
-        "Security",
-        "DevOps",
-        "UI/UX",
-        "Figma",
-        "Selenium",
-        "Testing",
-        "Agile",
-        "SCRUM",
-      ];
-      const input = document.getElementById("techInput");
-      const suggestions = document.getElementById("suggestions");
-      const techContainer = document.getElementById("techContainer");
-      const warning = document.getElementById("techWarning");
-      let selectedTechs = [];
+      document.addEventListener("DOMContentLoaded", () => {
+        const BACKEND_URL = "http://localhost:4000";
 
-      function renderSelected() {
-        techContainer.querySelectorAll(".chip").forEach((el) => el.remove());
-        selectedTechs.forEach((tech, i) => {
-          const chip = document.createElement("span");
-          chip.className =
-            "chip bg-yellow-500 text-black px-2 py-1 rounded-full text-sm inline-flex items-center";
-          chip.innerHTML = `${tech} <button class='ml-1 text-xs' data-index='${i}'>&times;</button>`;
-          techContainer.insertBefore(chip, input);
-        });
-        warning.classList.toggle(
-          "hidden",
-          selectedTechs.length >= 5 && selectedTechs.length <= 7
-        );
-      }
+        const technologies = [
+          ...new Set([
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "TypeScript",
+            "React.js",
+            "Angular",
+            "Vue.js",
+            "Svelte",
+            "Tailwind CSS",
+            "Bootstrap",
+            "Next.js",
+            "Gatsby",
+            "Communication",
+            "Collaboration",
+            "Adaptability",
+            "Creativity",
+            "Node.js",
+            "Express",
+            "Python (Django)",
+            "Flask",
+            "FastAPI",
+            "Java (Spring Boot)",
+            "Ruby on Rails",
+            "PHP (Laravel)",
+            ".NET Core",
+            "Go",
+            "Rust",
+            "SQL",
+            "REST & GraphQL APIs",
+            "Analytical thinking",
+            "Problem-solving",
+            "Teamwork",
+            "Time management",
+            "LAMP",
+            "JAMstack",
+            "Version control (Git)",
+            "Docker",
+            "CI/CD tools",
+            "Multitasking",
+            "Organization",
+            "Android (Kotlin)",
+            "Java",
+            "iOS (Swift)",
+            "Objective-C",
+            "Flutter",
+            "React Native",
+            "Xamarin",
+            "Ionic",
+            "Persistence",
+            "Jenkins",
+            "GitHub Actions",
+            "GitLab CI",
+            "Kubernetes",
+            "Terraform",
+            "Ansible",
+            "Chef",
+            "Puppet",
+            "AWS",
+            "Azure",
+            "GCP",
+            "Prometheus",
+            "ELK Stack",
+            "Analytical skills",
+            "Automation mindset",
+            "AWS (EC2)",
+            "Lambda",
+            "S3",
+            "CloudFormation",
+            "API Gateway",
+            "Serverless stack",
+            "Strategic thinking",
+            "Presentation",
+            "Leadership",
+            "Consultancy",
+            "MySQL",
+            "PostgreSQL",
+            "Oracle",
+            "MongoDB",
+            "Cassandra",
+            "Redis",
+            "DynamoDB",
+            "Backup/recovery platforms",
+            "Database monitoring tools",
+            "Patience",
+            "Attention to detail",
+            "Grafana",
+            "Splunk",
+            "Datadog",
+            "Automation scripts",
+            "Linux/Unix",
+            "Incident management platforms",
+            "Stress tolerance",
+            "Reliability",
+            "Selenium",
+            "Cypress",
+            "Jest",
+            "Mocha",
+            "JUnit",
+            "TestNG",
+            "Postman",
+            "Cucumber",
+            "Automated/manual testing tools",
+            "Bug trackers",
+            "Critical thinking",
+            "SAP",
+            "Oracle ERP",
+            "Microsoft Dynamics",
+            "Reporting tools",
+            "Business process automation platforms",
+            "Salesforce",
+            "Apex",
+            "Lightning",
+            "Visualforce",
+            "Integration tools",
+            "REST/SOAP APIs",
+            "Mix of AWS",
+            "Enterprise integration platforms",
+            "Security tools",
+            "Strategic vision",
+            "Architecture thinking",
+            "Unity",
+            "Unreal Engine",
+            "Godot",
+            "C#",
+            "C++",
+            "Blender",
+            "3D modeling/animation tools",
+            "Shaders",
+            "Game engines",
+            "Storytelling",
+            "Python",
+            "R",
+            "TensorFlow",
+            "PyTorch",
+            "Pandas",
+            "NumPy",
+            "Scikit-learn",
+            "Visualization tools",
+            "BigQuery",
+            "Databases",
+            "Curiosity",
+            "SIEM (Splunk)",
+            "ArcSight",
+            "Firewalls",
+            "Encryption platforms",
+            "Vulnerability scanners",
+            "IDS/IPS",
+            "Linux",
+            "Scripting",
+            "Integrity",
+            "Vigilance",
+            "ITIL",
+            "Project management tools",
+            "Budgeting platforms",
+            "Infrastructure (cloud/hybrid)",
+            "Security suite tools",
+            "Planning",
+            "Decision-making",
+            "Windows Server",
+            "Active Directory",
+            "PowerShell",
+            "Bash",
+            "Virtualization platforms (VMware)",
+            "Hyper-V",
+            "Monitoring tools",
+            "Troubleshooting",
+            "Figma",
+            "Sketch",
+            "Adobe XD",
+            "InVision",
+            "Prototyping/testing tools",
+            "Graphic design suites",
+            "Empathy",
+            "Visual design",
+            "Confluence",
+            "Markdown",
+            "Swagger/OpenAPI",
+            "Diagramming tools (Lucidchart)",
+            "Documentation platforms",
+            "Clarity",
+            "Research",
+            "Editing",
+            "Agile/SCRUM tools (Jira)",
+            "Trello",
+            "Documentation tools",
+            "Backlog management",
+            "Analytics tools",
+            "Stakeholder management",
+            "Prioritization",
+            "Project management & Gantt tools",
+            "Budgeting/ERP tools",
+            "Collaboration suites",
+            "Negotiation",
+            "Resource allocation",
+            "ATS",
+            "LinkedIn",
+            "Sourcing platforms",
+            "HRIS",
+            "Video interview tools",
+            "Networking",
+            "Persuasion",
+            "People skills",
+            "Integration platforms",
+            "Log analysis tools",
+            "Documentation",
+            "OS troubleshooting",
+            "Ticketing systems",
+            "Office suite",
+            "Application support",
+            "Hardware/software",
+            "Customer service",
+            "Active listening",
+            "Interpersonal skills",
+          ]),
+        ];
 
-      input.addEventListener("input", () => {
-        const query = input.value.toLowerCase().trim();
-        suggestions.innerHTML = "";
-        if (!query) {
-          suggestions.classList.add("hidden");
-          return;
-        }
-        const filtered = technologies.filter(
-          (tech) =>
-            tech.toLowerCase().includes(query) && !selectedTechs.includes(tech)
-        );
-        filtered.slice(0, 8).forEach((tech) => {
-          const li = document.createElement("li");
-          li.textContent = tech;
-          li.className =
-            "p-2 hover:bg-gray-700 cursor-pointer rounded transition duration-200";
-          li.addEventListener("click", () => {
-            if (selectedTechs.length >= 7) {
-              alert("You can select up to 7 technologies only!");
-              return;
-            }
-            selectedTechs.push(tech);
-            input.value = "";
-            suggestions.innerHTML = "";
-            renderSelected();
+        // =============================
+        // Technology Multi-Select Chips
+        // =============================
+        const techInput = document.getElementById("techInput");
+        const suggestions = document.getElementById("suggestions");
+        const techContainer = document.getElementById("techContainer");
+        const techWarning = document.getElementById("techWarning");
+
+        let selectedTechs = [];
+
+        function renderTechChips() {
+          techContainer
+            .querySelectorAll(".chip")
+            .forEach((chip) => chip.remove());
+
+          selectedTechs.forEach((tech, index) => {
+            const chip = document.createElement("span");
+            chip.className =
+              "chip bg-yellow-500 text-black px-2 py-1 rounded-full text-sm inline-flex items-center";
+            chip.innerHTML = `${tech} <button data-index="${index}" class="ml-1">&times;</button>`;
+            techContainer.insertBefore(chip, techInput);
           });
-          suggestions.appendChild(li);
+
+          techWarning.classList.toggle(
+            "hidden",
+            selectedTechs.length >= 5 && selectedTechs.length <= 7
+          );
+        }
+
+        techInput.addEventListener("input", () => {
+          const query = techInput.value.toLowerCase().trim();
+          suggestions.innerHTML = "";
+
+          if (!query) return;
+
+          const filtered = technologies.filter(
+            (t) => t.toLowerCase().includes(query) && !selectedTechs.includes(t)
+          );
+
+          filtered.slice(0, 10).forEach((tech) => {
+            const li = document.createElement("li");
+            li.textContent = tech;
+            li.className =
+              "p-2 hover:bg-gray-700 cursor-pointer rounded transition duration-200";
+
+            li.addEventListener("click", () => {
+              if (selectedTechs.length >= 7) {
+                alert("❗ Maximum 7 technologies allowed");
+                return;
+              }
+              selectedTechs.push(tech);
+              techInput.value = "";
+              suggestions.classList.add("hidden");
+              renderTechChips();
+            });
+
+            suggestions.appendChild(li);
+          });
+
+          suggestions.classList.remove("hidden");
         });
-        suggestions.classList.remove("hidden");
-      });
 
-      document.addEventListener("click", (e) => {
-        if (
-          !e.target.closest("#techInput") &&
-          !e.target.closest("#suggestions")
-        )
-          suggestions.classList.add("hidden");
-      });
+        document.addEventListener("click", (e) => {
+          if (
+            !e.target.closest("#techInput") &&
+            !e.target.closest("#suggestions")
+          ) {
+            suggestions.classList.add("hidden");
+          }
+        });
 
-      techContainer.addEventListener("click", (e) => {
-        if (e.target.tagName === "BUTTON") {
-          const index = e.target.dataset.index;
-          selectedTechs.splice(index, 1);
-          renderSelected();
-        }
-      });
+        techContainer.addEventListener("click", (e) => {
+          if (e.target.tagName === "BUTTON") {
+            const index = e.target.dataset.index;
+            selectedTechs.splice(index, 1);
+            renderTechChips();
+          }
+        });
 
-      // roles autocomplete
-      const roles = [
-        "IT Manager",
-        "System Administrator",
-        "Network Engineer",
-        "Database Administrator",
-        "Front-End Developer",
-        "Back-End Developer",
-        "Full Stack Developer",
-        "DevOps Engineer",
-        "Cloud Solutions Architect",
-        "Data Scientist",
-        "Machine Learning Engineer",
-        "UI/UX Designer",
-        "QA Engineer",
-        "Product Owner",
-        "Project Manager",
-        "SRE",
-        "ERP Consultant",
-        "Salesforce Developer",
-        "Solution Architect",
-      ];
-      const roleInput = document.getElementById("roleInput");
-      const roleSuggestions = document.getElementById("roleSuggestions");
+        // =============================
+        // Role Autocomplete
+        // =============================
+        const roleList = [
+          "IT Manager",
+          "System Administrator",
+          "Network Engineer",
+          "Database Administrator",
+          "Help Desk Technician",
+          "Front-End Developer",
+          "Back-End Developer",
+          "Full Stack Developer",
+          "DevOps Engineer",
+          "Cloud Solutions Architect",
+          "Info Security Analyst",
+          "Data Scientist",
+          "Machine Learning Engineer",
+          "UI/UX Designer",
+          "QA Engineer",
+          "Product Owner",
+          "SCRUM Master",
+          "Project Manager",
+          "App Support Engineer",
+          "Business Analyst",
+          "Mobile App Developer",
+          "IT Support Specialist",
+          "SRE",
+          "ERP Consultant",
+          "Salesforce Developer",
+          "Solution Architect",
+          "Game Developer",
+          "Technical Writer",
+          "IT Recruiter",
+        ];
 
-      roleInput.addEventListener("input", () => {
-        const query = roleInput.value.toLowerCase().trim();
-        roleSuggestions.innerHTML = "";
-        if (!query) {
-          roleSuggestions.classList.add("hidden");
-          return;
-        }
-        const filtered = roles.filter((r) => r.toLowerCase().includes(query));
-        if (!filtered.length) {
-          roleSuggestions.classList.add("hidden");
-          return;
-        }
-        filtered.forEach((role) => {
-          const li = document.createElement("li");
-          li.textContent = role;
-          li.className =
-            "p-2 hover:bg-gray-700 cursor-pointer rounded transition duration-200";
-          li.addEventListener("click", () => {
-            roleInput.value = role;
+        const roleInput = document.getElementById("roleInput");
+        const roleSuggestions = document.getElementById("roleSuggestions");
+
+        roleInput.addEventListener("input", () => {
+          const query = roleInput.value.toLowerCase().trim();
+          roleSuggestions.innerHTML = "";
+
+          const matches = roleList.filter((r) =>
+            r.toLowerCase().includes(query)
+          );
+
+          if (matches.length === 0) {
             roleSuggestions.classList.add("hidden");
-          });
-          roleSuggestions.appendChild(li);
-        });
-        roleSuggestions.classList.remove("hidden");
-      });
-
-      document.addEventListener("click", (e) => {
-        if (
-          !e.target.closest("#roleInput") &&
-          !e.target.closest("#roleSuggestions")
-        )
-          roleSuggestions.classList.add("hidden");
-      });
-
-      // form submission (dummy, sends to backend if available)
-      document
-        .getElementById("aspiredRoleForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const role = document.getElementById("roleInput").value.trim();
-          const timeFrame = document.getElementById("timeFrame").value.trim();
-          if (selectedTechs.length < 5 || selectedTechs.length > 7) {
-            warning.classList.remove("hidden");
             return;
           }
-          const payload = { role, timeFrame, technologies: selectedTechs };
-          try {
-            const res = await fetch("http://localhost:4000/api/aspired-role", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
+
+          matches.forEach((role) => {
+            const li = document.createElement("li");
+            li.textContent = role;
+            li.className =
+              "p-2 hover:bg-gray-700 cursor-pointer rounded transition duration-200";
+            li.addEventListener("click", () => {
+              roleInput.value = role;
+              roleSuggestions.classList.add("hidden");
             });
-            const data = await res.json();
-            if (res.ok) {
-              document.getElementById("message").textContent =
-                "✅ Aspired role saved!";
-              selectedTechs = [];
-              renderSelected();
-              e.target.reset();
-            } else {
-              document.getElementById("message").textContent = `❌ ${
-                data.error || "Failed"
-              }`;
-            }
-          } catch (err) {
-            console.error(err);
-            document.getElementById("message").textContent =
-              "❌ Failed to save aspired role (backend unreachable)";
+            roleSuggestions.appendChild(li);
+          });
+
+          roleSuggestions.classList.remove("hidden");
+        });
+
+        document.addEventListener("click", (e) => {
+          if (
+            !e.target.closest("#roleInput") &&
+            !e.target.closest("#roleSuggestions")
+          ) {
+            roleSuggestions.classList.add("hidden");
           }
         });
 
-      renderSelected();
-    </script>
+        // =============================
+        // Submit Handler (Final)
+        // =============================
+        document
+          .getElementById("aspiredRoleForm")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-    <script src="../js/xcelerate.js"></script>
+            const role = roleInput.value.trim();
+            const timeFrame = document.getElementById("timeFrame").value.trim();
+            const message = document.getElementById("message");
+
+            if (selectedTechs.length < 5 || selectedTechs.length > 7) {
+              techWarning.classList.remove("hidden");
+              return;
+            }
+
+            const userId = 1;
+            const payload = {
+              userId,
+              role,
+              timeFrame,
+              technologies: selectedTechs,
+            };
+
+            try {
+              const res = await fetch(`${BACKEND_URL}/api/aspired-role`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
+
+              const data = await res.json();
+
+              if (res.ok) {
+                message.textContent = "✅ Aspired role saved!";
+                selectedTechs = [];
+                renderTechChips();
+                e.target.reset();
+              } else {
+                message.textContent = `❌ ${data.error}`;
+              }
+            } catch (err) {
+              console.error(err);
+              message.textContent = "❌ Server error";
+            }
+          });
+
+        async function loadExistingAspiredRole() {
+          const userId = 1;
+
+          try {
+            const res = await fetch(
+              `${BACKEND_URL}/api/aspired-role/${userId}`
+            );
+            if (!res.ok) return;
+
+            const body = await res.json();
+
+            if (!body.exists || !body.data) return;
+
+            const saved = body.data; // ⭐ this is the actual record
+
+            // Fill inputs
+            roleInput.value = saved.role || "";
+            document.getElementById("timeFrame").value = saved.timeFrame || "";
+
+            // Restore technologies (backend returns array already)
+            selectedTechs = Array.isArray(saved.technologies)
+              ? saved.technologies
+              : JSON.parse(saved.technologies || "[]");
+
+            renderTechChips();
+          } catch (err) {
+            console.error("Failed to load role", err);
+          }
+        }
+        renderTechChips();
+        loadExistingAspiredRole();
+      });
+    </script>
   </body>
 </html>

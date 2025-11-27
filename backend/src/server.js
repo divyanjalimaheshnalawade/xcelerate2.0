@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 4000;
 
 (async () => {
   try {
-    await sequelize.sync({ alter: false });
+    await sequelize.sync({ alter: true });
 
     // ---- 🔽 SEED DATA BLOCK (only runs if DB is empty) ----
     const { User, Skill, Role } = require("./models");

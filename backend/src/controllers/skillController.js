@@ -1,4 +1,4 @@
-src / controllers / skillController.js;
+//src / controllers / skillController.js;
 const { Skill } = require("../models");
 
 exports.createSkill = async (req, res) => {

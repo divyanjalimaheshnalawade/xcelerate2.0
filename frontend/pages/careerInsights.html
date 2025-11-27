@@ -163,7 +163,7 @@
             <h2
               class="font-semibold text-xl mb-3 text-blue-400 flex items-center gap-2"
             >
-              <i class="lucide lucide-briefcase"></i> Matching Roles
+              <i class="lucide lucide-briefcase"></i> Matching Roles above 65%
             </h2>
             <p class="text-gray-400 text-sm mb-2">
               Jobs aligned with your skills.
@@ -227,26 +227,20 @@
 
       async function loadCareerInsights() {
         try {
-          // 1) Get latest aspired role (your aspiredRoleRoutes GET "/" returns latest)
+          // 1) Fetch latest aspired role
           let aspiredRole = null;
           try {
-            const r = await fetch("http://localhost:4000/api/aspired-role");
+            const r = await fetch("http://localhost:4000/api/aspired-role/1");
             if (r.ok) {
               const json = await r.json();
-              // try multiple possible fields
-              aspiredRole =
-                json.aspiredRole ||
-                json.aspired_role ||
-                json.role ||
-                json.title ||
-                json.name ||
-                null;
+              if (json.exists && json.data) {
+                aspiredRole = json.data.role;
+              }
             }
           } catch (err) {
             console.warn("Could not fetch latest aspired role:", err);
           }
 
-          // If no aspired role found, show message
           if (!aspiredRole) {
             document.getElementById("skillGapContent").innerHTML = `
           <p class="text-gray-400">No aspired role found. Please set your aspired role first.</p>
@@ -254,17 +248,18 @@
             return;
           }
 
-          // 2) Ask backend to analyze (CSV-based endpoint)
+          // 2) Ask backend to analyze skill gap
           const analyzeRes = await fetch(
             "http://localhost:4000/api/skill-gap/analyze",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ aspiredRole }),
+              body: JSON.stringify({ userId: 1 }),
             }
           );
 
           if (!analyzeRes.ok) throw new Error("Skill gap API error");
+
           const data = await analyzeRes.json();
 
           // Render skill gap
@@ -274,37 +269,39 @@
           const userSkills = data.userSkills ?? data.userSkills ?? [];
 
           document.getElementById("skillGapContent").innerHTML = `
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm text-gray-400">Aspired Role</p>
-            <p class="font-semibold text-lg">${esc(aspiredRole)}</p>
-          </div>
-          <div class="text-right">
-            <p class="text-sm text-gray-400">Match</p>
-            <p class="font-bold text-2xl text-yellow-400">${esc(match)}%</p>
-          </div>
-        </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm text-gray-400">Aspired Role</p>
+                  <p class="font-semibold text-lg">${esc(aspiredRole)}</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-sm text-gray-400">Match</p>
+                  <p class="font-bold text-2xl text-yellow-400">${esc(
+                    match
+                  )}%</p>
+                </div>
+              </div>
 
-        <div class="mt-3 text-sm text-gray-300">
-          <p><strong>Current Skills:</strong> ${esc(
-            userSkills.join(", ") || "None"
-          )}</p>
-          <p class="mt-1"><strong>Required Skills:</strong> ${esc(
-            required.join(", ") || "None"
-          )}</p>
-          <p class="mt-1"><strong>Missing:</strong> ${
-            missing.length
-              ? esc(missing.join(", "))
-              : "<span class='text-green-400'>None</span>"
-          }</p>
-        </div>
+              <div class="mt-3 text-sm text-gray-300">
+                <p><strong>Current Skills:</strong> ${esc(
+                  userSkills.join(", ") || "None"
+                )}</p>
+                <p class="mt-1"><strong>Required Skills:</strong> ${esc(
+                  required.join(", ") || "None"
+                )}</p>
+                <p class="mt-1"><strong>Missing:</strong> ${
+                  missing.length
+                    ? esc(missing.join(", "))
+                    : "<span class='text-green-400'>None</span>"
+                }</p>
+              </div>
 
-        <div class="mt-4">
-          <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
-            <div style="width: ${match}%" class="h-3 bg-yellow-400 rounded-full"></div>
-          </div>
-        </div>
-      `;
+              <div class="mt-4">
+                <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
+                  <div style="width: ${match}%" class="h-3 bg-yellow-400 rounded-full"></div>
+                </div>
+              </div>
+            `;
 
           // store missingSkills for learning path
           window.__missingSkills = missing.map((m) => String(m).toLowerCase());
@@ -319,13 +316,13 @@
       async function loadMatchingRoles() {
         try {
           const res = await fetch(
-            "http://localhost:4000/api/skill-gap/matching-roles"
+            "http://localhost:4000/api/skill-gap/matching-roles/1"
           );
           if (!res.ok) throw new Error("Match roles API error");
           const data = await res.json();
 
           const container = document.getElementById("matchingRolesContent");
-          container.innerHTML = ""; // clear
+          container.innerHTML = "";
 
           if (!Array.isArray(data) || data.length === 0) {
             container.innerHTML = `<p class="text-gray-400">No matching roles found.</p>`;
@@ -333,38 +330,38 @@
           }
 
           container.innerHTML = `
-        <div class="grid grid-cols-1 gap-2">
-          ${data
-            .map(
-              (r) => `
-            <div class="mb-2 p-3 bg-[#1f1f1f] rounded-md">
-              <div class="flex justify-between items-center">
-                <div>
-                  <p class="font-semibold text-sm">${esc(
-                    r.role || r.Role || "Role"
-                  )}</p>
-                  <p class="text-xs text-gray-400">${esc(
-                    (r.totalRequired || r.totalRequired) + " required"
-                  )}</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-bold">${esc(
-                    r.matchPercentage ?? r.matchPct ?? 0
-                  )}%</p>
-                </div>
-              </div>
-              <p class="text-xs text-gray-400 mt-2">Missing: ${esc(
-                (r.missingSkills || r.missing || []).join(", ") || "None"
-              )}</p>
-            </div>`
-            )
-            .join("")}
-        </div>
-      `;
+            <div class="grid grid-cols-1 gap-3">
+            ${data
+              .map((r) => {
+                const pct = r.matchPercentage || 0;
+
+                // Color logic
+                const barColor = pct >= 80 ? "bg-green-500" : "bg-amber-400";
+
+                return `
+                  <div class="p-4 bg-[#1f1f1f] rounded-lg border border-gray-700">
+                    <div class="flex justify-between items-center mb-2">
+                      <p class="font-semibold text-sm">${esc(r.role)}</p>
+                      <span class="font-bold">${pct}%</span>
+                    </div>
+
+                    <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden">
+                      <div class="${barColor} h-3" style="width: ${pct}%"></div>
+                    </div>
+
+                    <p class="text-xs text-gray-400 mt-2">
+                      Missing: ${esc(r.missingSkills.join(", ") || "None")}
+                    </p>
+                  </div>`;
+              })
+              .join("")}
+            </div>
+          `;
         } catch (err) {
           console.error("loadMatchingRoles error:", err);
-          const container = document.getElementById("matchingRolesContent");
-          container.innerHTML = `<p class="text-red-400">❌ Unable to load matching roles.</p>`;
+          document.getElementById(
+            "matchingRolesContent"
+          ).innerHTML = `<p class="text-red-400">❌ Unable to load matching roles.</p>`;
         }
       }
 
@@ -403,13 +400,13 @@
               `Search for "${m}" on Google for top resources.`,
             ];
             content.innerHTML += `
-          <div class="mb-3">
-            <p class="font-semibold text-sm">${esc(ms)}</p>
-            <ul class="list-disc ml-4 text-gray-300 text-xs">
-              ${courses.map((c) => `<li>${esc(c)}</li>`).join("")}
-            </ul>
-          </div>
-        `;
+                <div class="mb-3">
+                  <p class="font-semibold text-sm">${esc(ms)}</p>
+                  <ul class="list-disc ml-4 text-gray-300 text-xs">
+                    ${courses.map((c) => `<li>${esc(c)}</li>`).join("")}
+                  </ul>
+                </div>
+              `;
           });
         } catch (err) {
           console.error("loadLearningPaths error:", err);
@@ -447,15 +444,14 @@
           }
 
           openings.forEach((op) => {
-            // try various field names for required skills
             let req = [];
+
             if (op.requiredSkills && Array.isArray(op.requiredSkills))
               req = op.requiredSkills.map((s) => s.name || s);
             else if (op.RequiredSkills)
               req = String(op.RequiredSkills)
                 .split(";")
-                .map((s) => s.trim())
-                .filter(Boolean);
+                .map((s) => s.trim());
             else if (op.skills)
               req = Array.isArray(op.skills)
                 ? op.skills.map((s) => s.name || s)
@@ -470,12 +466,12 @@
               req = String(op.skills_text)
                 .split(";")
                 .map((s) => s.trim());
-            else {
-              // last fallback: try to pick any string fields that look like skills
-              req = [];
-            }
 
             const matchPct = computeMatchPercent(userSkills, req);
+
+            // ⭐ FILTER — ONLY SHOW ≥ 65%
+            if (matchPct < 65) return;
+
             const title =
               op.title || op.role || op.position || op.name || "Opening";
 
@@ -498,10 +494,8 @@
 
           // append under matchingRolesContent (after roles)
           document.getElementById("matchingRolesContent").innerHTML += `
-        <div class="mt-4">
-          <p class="text-gray-300 font-semibold mb-2">Current Openings Matches</p>
-        </div>
-      `;
+              
+            `;
           document
             .getElementById("matchingRolesContent")
             .appendChild(container);

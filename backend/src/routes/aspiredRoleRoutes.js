@@ -1,78 +1,97 @@
-//src/routes/aspiredRoleRoutes.js
 const express = require("express");
 const router = express.Router();
-
-const sequelize = require("../config/db"); // your sequelize instance
-const AspiredRole = require("../models/aspiredRole")(sequelize); // ✅ call the function
-
-// Save aspired role
-router.post("/analyze", async (req, res) => {
+const { User, Skill, Role, AspiredRole } = require("../models");
+router.post("/", async (req, res) => {
   try {
-    console.log("🟢 Incoming Skill Gap Request:", req.body);
+    console.log("🟢 Save Aspired Role Request:", req.body);
 
-    const { aspiredRole } = req.body;
-    if (!aspiredRole)
-      return res.status(400).json({ message: "aspiredRole is required" });
+    const timeFrame = req.body.timeFrame || req.body.timeframeMonths;
+    const { role, technologies, userId } = req.body;
 
-    console.log("🔍 Looking up Role for:", aspiredRole);
+    if (!role || !timeFrame || !userId) {
+      return res.status(400).json({
+        message: "role, timeFrame and userId are required",
+      });
+    }
 
-    // Fetch Role and Skills
-    const role = await Role.findOne({
-      where: { title: aspiredRole },
+    const roleRecord = await Role.findOne({
+      where: { title: role },
       include: [{ model: Skill, as: "requiredSkills" }],
     });
 
-    console.log("📘 Role found:", role ? role.title : "none");
+    if (!roleRecord) {
+      return res
+        .status(404)
+        .json({ message: `Aspired role '${role}' not found` });
+    }
 
-    if (!role)
-      return res.status(404).json({ message: "Role not found in database" });
+    const requiredSkills = roleRecord.requiredSkills.map((s) => s.name);
 
-    console.log("🧩 Required skills:", role.requiredSkills);
-
-    const requiredSkillNames = role.requiredSkills.map((s) => s.name);
-    console.log("✅ Required skill names:", requiredSkillNames);
-
-    // Static current skills for now
     const userSkills = ["JavaScript", "React", "HTML", "CSS"];
-    console.log("🧠 User skills:", userSkills);
 
-    const missingSkills = requiredSkillNames.filter(
-      (s) => !userSkills.includes(s)
-    );
+    const missingSkills = requiredSkills.filter((s) => !userSkills.includes(s));
+
     const matchPercentage = Math.round(
-      ((requiredSkillNames.length - missingSkills.length) /
-        requiredSkillNames.length) *
+      ((requiredSkills.length - missingSkills.length) / requiredSkills.length) *
         100
     );
 
-    console.log("📊 Match:", matchPercentage, "%");
-
-    res.json({
-      aspiredRole,
-      userSkills,
-      requiredSkills: requiredSkillNames,
-      missingSkills,
+    const saved = await AspiredRole.create({
+      userId,
+      role,
+      timeFrame,
+      technologies: JSON.stringify(technologies),
       matchPercentage,
     });
-  } catch (err) {
-    console.error("❌ Skill Gap Analysis Failed:", err);
-    res.status(500).json({ message: "Error performing skill gap analysis" });
+
+    return res.json({
+      message: "Aspired role saved successfully",
+      exists: true,
+      data: saved,
+    });
+  } catch (error) {
+    console.error("❌ Error saving aspired role:", error);
+    res.status(500).json({ message: "Server failed to save aspired role" });
   }
 });
-
-// Fetch aspired role (latest one)
-router.get("/", async (req, res) => {
+router.get("/:userId", async (req, res) => {
   try {
+    const { userId } = req.params;
+
+    // Get the most recent aspired role
     const latest = await AspiredRole.findOne({
-      order: [["createdAt", "DESC"]],
+      where: { userId },
+      order: [["created_at", "DESC"]],
     });
-    if (!latest) return res.json({});
-    const data = latest.toJSON();
-    data.technologies = JSON.parse(data.technologies);
-    res.json(data);
-  } catch (error) {
-    console.error("Error fetching aspired role:", error);
-    res.status(500).json({ error: "Server error" });
+
+    if (!latest) {
+      return res.json({ exists: false });
+    }
+
+    // Parse technologies safely
+    let technologies = latest.technologies;
+    try {
+      if (typeof technologies === "string") {
+        technologies = JSON.parse(technologies);
+      }
+    } catch {
+      technologies = [];
+    }
+
+    return res.json({
+      exists: true,
+      data: {
+        id: latest.id,
+        userId: latest.userId,
+        role: latest.role,
+        timeFrame: latest.timeFrame,
+        technologies,
+        matchPercentage: latest.matchPercentage || 0,
+      },
+    });
+  } catch (err) {
+    console.error("GET /aspired-role error:", err);
+    res.status(500).json({ exists: false, error: err.message });
   }
 });
 

@@ -1,144 +1,145 @@
-//src/routes/skillGapRoutes.js
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
-const path = require("path");
-const csv = require("csv-parser");
+const db = require("../config/db");
 
-//Userskills are fixed for now
-const userSkills = ["JavaScript", "React", "HTML", "CSS"];
-
-const csvPath = path.join(__dirname, "roles_skills.csv");
-
-// Read CSV into memory
-const readCSV = async () => {
-  return new Promise((resolve, reject) => {
-    const results = [];
-    fs.createReadStream(csvPath)
-      .pipe(csv())
-      .on("data", (data) => results.push(data))
-      .on("end", () => resolve(results))
-      .on("error", (err) => reject(err));
-  });
-};
-
-// ✅ POST /api/skill-gap/analyze
+// ======================================================
+// 1️⃣ AUTO Skill Gap Based On User's Aspired Role
+// ======================================================
 router.post("/analyze", async (req, res) => {
   try {
-    const { aspiredRole } = req.body;
+    const { userId } = req.body;
 
-    if (!aspiredRole) {
-      return res.status(400).json({ message: "aspiredRole is required" });
+    if (!userId) {
+      return res.status(400).json({ message: "userId is required" });
     }
 
-    console.log(`🧠 Skill Gap Analysis for role: ${aspiredRole}`);
-
-    // Step 1: Read CSV
-    const rolesData = await readCSV();
-
-    // Step 2: Find matching role (case-insensitive)
-    const roleRow = rolesData.find(
-      (row) =>
-        row.Role &&
-        row.Role.toLowerCase().trim() === aspiredRole.toLowerCase().trim()
+    // 1) Get user's aspired role
+    const [roleRows] = await db.query(
+      `SELECT * FROM aspired_roles WHERE userId = ? ORDER BY id DESC LIMIT 1`,
+      [userId]
     );
 
-    if (!roleRow) {
-      return res
-        .status(404)
-        .json({ message: `Role "${aspiredRole}" not found in CSV` });
+    if (roleRows.length === 0) {
+      return res.json({ message: "No aspired role found", exists: false });
     }
 
-    // Step 3: Parse skills separated by semicolons
-    const requiredSkills = roleRow.RequiredSkills
-      ? roleRow.RequiredSkills.split(";").map((s) => s.trim())
-      : [];
+    const aspired = roleRows[0];
+    const userSkills = JSON.parse(aspired.technologies);
 
-    console.log("✅ Required Skills from CSV:", requiredSkills);
+    // 2) Fetch required skills from roles table
+    const [roleInfo] = await db.query(
+      `SELECT * FROM roles WHERE name = ? LIMIT 1`,
+      [aspired.role]
+    );
 
-    if (!requiredSkills.length) {
-      return res.status(404).json({
-        message: `No required skills listed for role "${aspiredRole}" in CSV`,
+    if (roleInfo.length === 0) {
+      return res.json({
+        message: "Role not found in master table",
+        exists: false,
       });
     }
 
-    // Step 4: Compare with user skills
-    const missingSkills = requiredSkills.filter(
-      (skill) =>
-        !userSkills.some(
-          (userSkill) =>
-            userSkill.toLowerCase().trim() === skill.toLowerCase().trim()
-        )
+    const requiredSkills = JSON.parse(roleInfo[0].skills);
+
+    // Convert to lowercase
+    const userLower = userSkills.map((s) => s.toLowerCase());
+    const reqLower = requiredSkills.map((s) => s.toLowerCase());
+
+    // Missing skills
+    const missingSkills = reqLower.filter((s) => !userLower.includes(s));
+
+    // Match %
+    const matchPercentage = Math.round(
+      ((reqLower.length - missingSkills.length) / reqLower.length) * 100
     );
 
-    const total = requiredSkills.length;
-    const matchPercentage = total
-      ? Math.round(((total - missingSkills.length) / total) * 100)
-      : 0;
+    // Save skill gap record
+    await db.query(
+      `INSERT INTO skill_gap_analysis (userId, roleId, matchPercentage, missingSkills)
+       VALUES (?, ?, ?, ?)`,
+      [userId, roleInfo[0].id, matchPercentage, JSON.stringify(missingSkills)]
+    );
 
-    // Step 5: Respond
     return res.json({
-      aspiredRole,
-      totalRequired: total,
-      requiredSkills,
+      exists: true,
+      aspiredRole: aspired.role,
       userSkills,
+      requiredSkills,
       missingSkills,
       matchPercentage,
     });
   } catch (err) {
-    console.error("❌ Error performing skill gap analysis:", err);
-    res.status(500).json({
-      message: "Error performing skill gap analysis",
-      error: err.message,
-    });
+    console.error("Skill analysis error:", err);
+    res.status(500).json({ message: "Server Error", error: err.message });
   }
 });
-// ✅ GET /api/skill-gap/matching-roles
-router.get("/matching-roles", async (req, res) => {
+
+// ======================================================
+// 2️⃣ Matching Roles (Auto using user's skills)
+// ======================================================
+router.get("/matching-roles/:userId", async (req, res) => {
   try {
-    const rolesData = await readCSV();
+    const userId = req.params.userId;
 
-    // Compute match percentage for each role
-    const rolesWithMatch = rolesData.map((row) => {
-      const requiredSkills = row.RequiredSkills
-        ? row.RequiredSkills.split(";").map((s) => s.trim())
-        : [];
+    const [roleRows] = await db.query(
+      `SELECT * FROM aspired_roles WHERE userId = ? ORDER BY id DESC LIMIT 1`,
+      [userId]
+    );
 
-      const missingSkills = requiredSkills.filter(
-        (skill) =>
-          !userSkills.some(
-            (userSkill) =>
-              userSkill.toLowerCase().trim() === skill.toLowerCase().trim()
-          )
+    if (roleRows.length === 0) return res.json([]);
+
+    const userSkills = JSON.parse(roleRows[0].technologies).map((s) =>
+      s.toLowerCase()
+    );
+
+    const [roles] = await db.query(`SELECT * FROM roles`);
+
+    const matches = roles.map((r) => {
+      const required = JSON.parse(r.skills).map((s) => s.toLowerCase());
+      const missing = required.filter((s) => !userSkills.includes(s));
+
+      const matchPercentage = Math.round(
+        ((required.length - missing.length) / required.length) * 100
       );
 
-      const total = requiredSkills.length;
-      const matchPercentage = total
-        ? Math.round(((total - missingSkills.length) / total) * 100)
-        : 0;
-
       return {
-        role: row.Role,
+        role: r.name,
+        requiredSkills: required,
+        missingSkills: missing,
         matchPercentage,
-        totalRequired: total,
-        requiredSkills,
-        userSkills,
-        missingSkills,
       };
     });
 
-    // ✅ Sort roles by match percentage (highest first)
-    const sortedRoles = rolesWithMatch.sort(
-      (a, b) => b.matchPercentage - a.matchPercentage
+    res.json(matches);
+  } catch (err) {
+    console.log("Matching roles error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ======================================================
+// 3️⃣ Latest Skill Gap for Dashboard
+// ======================================================
+router.get("/latest-gap/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const [rows] = await db.query(
+      `SELECT * FROM skill_gap_analysis
+       WHERE userId = ?
+       ORDER BY createdAt DESC
+       LIMIT 1`,
+      [userId]
     );
 
-    res.json(sortedRoles);
+    if (rows.length === 0) return res.json({ exists: false });
+
+    rows[0].missingSkills = JSON.parse(rows[0].missingSkills);
+
+    res.json({ exists: true, data: rows[0] });
   } catch (err) {
-    console.error("❌ Error fetching matching roles:", err);
-    res.status(500).json({
-      message: "Error fetching matching roles",
-      error: err.message,
-    });
+    console.error("Latest gap fetch error:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
