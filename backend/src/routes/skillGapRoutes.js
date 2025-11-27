@@ -1,16 +1,16 @@
+//src/routes/skillGapRoutes.js
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 const csv = require("csv-parser");
 
-// ✅ Fixed user skills (for now)
+//Userskills are fixed for now
 const userSkills = ["JavaScript", "React", "HTML", "CSS"];
 
-// ✅ Path to your CSV file
 const csvPath = path.join(__dirname, "roles_skills.csv");
 
-// ✅ Helper: Read CSV into memory
+// Read CSV into memory
 const readCSV = async () => {
   return new Promise((resolve, reject) => {
     const results = [];

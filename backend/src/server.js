@@ -30,7 +30,7 @@ const PORT = process.env.PORT || 4000;
     await sequelize.sync({ alter: false });
 
     // ---- 🔽 SEED DATA BLOCK (only runs if DB is empty) ----
-    const { Employee, Skill, Role } = require("./models");
+    const { User, Skill, Role } = require("./models");
 
     const skillCount = await Skill.count();
     if (skillCount === 0) {
@@ -41,10 +41,12 @@ const PORT = process.env.PORT || 4000;
         { name: "Node.js" },
       ]);
 
-      const emp = await Employee.create({
+      const emp = await User.create({
         name: "Divyanjali",
         email: "divya@example.com",
+        password: "password123",
       });
+
       await emp.addSkills([js, react]); // employee current skills
 
       const role = await Role.create({

@@ -1,25 +1,31 @@
-// backend/src/seedRoles.js
 const { sequelize, Role, Skill } = require("./models");
 
-async function seed() {
+async function seedRoles() {
   try {
-    await sequelize.sync(); // safe - won't drop by default
-    // create skills (if not exists)
-    const [js] = await Skill.findOrCreate({ where: { name: "JavaScript" } });
-    const [react] = await Skill.findOrCreate({ where: { name: "React" } });
-    const [node] = await Skill.findOrCreate({ where: { name: "Node.js" } });
-    const [kube] = await Skill.findOrCreate({ where: { name: "Kubernetes" } });
-    // create role
-    const [fullstack] = await Role.findOrCreate({
-      where: { title: "Full Stack Developer" },
-    });
-    // associate (through RoleSkills)
-    await fullstack.addRequiredSkills([js, react, node, kube]);
-    console.log("✅ Seeded Full Stack Developer + skills");
+    await sequelize.sync();
+
+    const roleData = {
+      "Full Stack Developer": ["JavaScript", "React", "Node.js", "SQL"],
+      "Frontend Developer": ["HTML", "CSS", "JavaScript", "React"],
+      "Cloud Engineer": ["AWS", "Linux", "Docker", "Kubernetes"],
+    };
+
+    for (const [roleName, skills] of Object.entries(roleData)) {
+      const [role] = await Role.findOrCreate({ where: { title: roleName } });
+
+      const skillRecords = await Promise.all(
+        skills.map((name) => Skill.findOrCreate({ where: { name } }))
+      );
+
+      await role.addRequiredSkills(skillRecords.map((s) => s[0]));
+    }
+
+    console.log("✅ Roles + Required Skills Seeded");
     process.exit(0);
   } catch (err) {
-    console.error("Seed error:", err);
+    console.error("❌ seedRoles error:", err);
     process.exit(1);
   }
 }
-seed();
+
+seedRoles();
