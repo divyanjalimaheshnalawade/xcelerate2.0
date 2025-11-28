@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../config/db");
-
+const db = require("../config/db"); // this is Sequelize
+const sequelize = require("../config/db");
 // ======================================================
 // 1️⃣ AUTO Skill Gap Based On User's Aspired Role
 // ======================================================
@@ -14,9 +14,12 @@ router.post("/analyze", async (req, res) => {
     }
 
     // 1) Get user's aspired role
-    const [roleRows] = await db.query(
+    const roleRows = await db.query(
       `SELECT * FROM aspired_roles WHERE userId = ? ORDER BY id DESC LIMIT 1`,
-      [userId]
+      {
+        replacements: [userId],
+        type: db.QueryTypes.SELECT,
+      }
     );
 
     if (roleRows.length === 0) {
@@ -27,9 +30,12 @@ router.post("/analyze", async (req, res) => {
     const userSkills = JSON.parse(aspired.technologies);
 
     // 2) Fetch required skills from roles table
-    const [roleInfo] = await db.query(
+    const roleInfo = await db.query(
       `SELECT * FROM roles WHERE name = ? LIMIT 1`,
-      [aspired.role]
+      {
+        replacements: [aspired.role],
+        type: db.QueryTypes.SELECT,
+      }
     );
 
     if (roleInfo.length === 0) {
@@ -57,7 +63,15 @@ router.post("/analyze", async (req, res) => {
     await db.query(
       `INSERT INTO skill_gap_analysis (userId, roleId, matchPercentage, missingSkills)
        VALUES (?, ?, ?, ?)`,
-      [userId, roleInfo[0].id, matchPercentage, JSON.stringify(missingSkills)]
+      {
+        replacements: [
+          userId,
+          roleInfo[0].id,
+          matchPercentage,
+          JSON.stringify(missingSkills),
+        ],
+        type: db.QueryTypes.INSERT,
+      }
     );
 
     return res.json({
@@ -81,21 +95,42 @@ router.get("/matching-roles/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const [roleRows] = await db.query(
-      `SELECT * FROM aspired_roles WHERE userId = ? ORDER BY id DESC LIMIT 1`,
-      [userId]
+    // 1️⃣ Get user's latest aspired role
+    const aspiredRoles = await sequelize.query(
+      `SELECT * FROM aspired_roles WHERE user_id = ? ORDER BY id DESC LIMIT 1`,
+      {
+        replacements: [userId],
+        type: sequelize.QueryTypes.SELECT,
+      }
     );
 
-    if (roleRows.length === 0) return res.json([]);
+    if (!aspiredRoles.length) {
+      return res.json({ message: "No aspired role found", roles: [] });
+    }
 
-    const userSkills = JSON.parse(roleRows[0].technologies).map((s) =>
-      s.toLowerCase()
-    );
+    const aspired = aspiredRoles[0];
 
-    const [roles] = await db.query(`SELECT * FROM roles`);
+    // Parse user skills safely
+    let userSkills = [];
+    try {
+      userSkills = JSON.parse(aspired.technologies || "[]").map((s) =>
+        String(s).toLowerCase()
+      );
+    } catch (e) {
+      userSkills = [];
+    }
 
-    const matches = roles.map((r) => {
-      const required = JSON.parse(r.skills).map((s) => s.toLowerCase());
+    // 2️⃣ Fetch all roles from master list
+    const roles = await sequelize.query(`SELECT * FROM roles`, {
+      type: sequelize.QueryTypes.SELECT,
+    });
+
+    // 3️⃣ Calculate match % for each role
+    const matches = roles.map((role) => {
+      const required = JSON.parse(role.skills || "[]").map((s) =>
+        String(s).toLowerCase()
+      );
+
       const missing = required.filter((s) => !userSkills.includes(s));
 
       const matchPercentage = Math.round(
@@ -103,17 +138,23 @@ router.get("/matching-roles/:userId", async (req, res) => {
       );
 
       return {
-        role: r.name,
+        role: role.name,
         requiredSkills: required,
         missingSkills: missing,
         matchPercentage,
       };
     });
 
-    res.json(matches);
+    // 4️⃣ Filter roles above 65%
+    const filtered = matches.filter((r) => r.matchPercentage >= 65);
+
+    // 5️⃣ Sort by match percentage (highest first)
+    filtered.sort((a, b) => b.matchPercentage - a.matchPercentage);
+
+    res.json(filtered);
   } catch (err) {
-    console.log("Matching roles error:", err);
-    res.status(500).json({ message: "Server error" });
+    console.error("Matching roles error:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
@@ -124,12 +165,15 @@ router.get("/latest-gap/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const [rows] = await db.query(
+    const rows = await db.query(
       `SELECT * FROM skill_gap_analysis
        WHERE userId = ?
        ORDER BY createdAt DESC
        LIMIT 1`,
-      [userId]
+      {
+        replacements: [userId],
+        type: db.QueryTypes.SELECT,
+      }
     );
 
     if (rows.length === 0) return res.json({ exists: false });
