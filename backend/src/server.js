@@ -8,6 +8,7 @@ const careerRoutes = require("./routes/careerRoutes");
 const currentOpeningsRoutes = require("./routes/currentOpenings");
 const analysisRoutes = require("./routes/analysis");
 const skillGapRoutes = require("./routes/skillGapRoutes");
+const careerInsightsRoutes = require("./routes/careerInsightsRoutes");
 
 const app = express();
 app.use(cors({ origin: "*" }));
@@ -19,6 +20,7 @@ app.use("/api/careers", careerRoutes);
 app.use("/api/currentOpenings", currentOpeningsRoutes);
 app.use("/api/analysis", analysisRoutes);
 app.use("/api/skill-gap", skillGapRoutes);
+app.use("/api/career-insights", careerInsightsRoutes);
 
 // simple health
 app.get("/api/health", (req, res) => res.json({ ok: true }));
