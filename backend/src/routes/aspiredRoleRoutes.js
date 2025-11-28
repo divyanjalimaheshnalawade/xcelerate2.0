@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
 
     const requiredSkills = roleRecord.requiredSkills.map((s) => s.name);
 
-    const userSkills = ["JavaScript", "React", "HTML", "CSS"];
+    const userSkills = ["JavaScript", "React", "HTML", "CSS", "SQL"];
 
     const missingSkills = requiredSkills.filter((s) => !userSkills.includes(s));
 

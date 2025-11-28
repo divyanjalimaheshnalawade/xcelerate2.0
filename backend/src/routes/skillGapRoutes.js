@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db"); // this is Sequelize
 const sequelize = require("../config/db");
+const { SkillGapAnalysis, AspiredRole, CurrentOpening } = require("../models");
+
 // ======================================================
 // 1️⃣ AUTO Skill Gap Based On User's Aspired Role
 // ======================================================
@@ -88,73 +90,74 @@ router.post("/analyze", async (req, res) => {
   }
 });
 
-// ======================================================
-// 2️⃣ Matching Roles (Auto using user's skills)
-// ======================================================
-router.get("/matching-roles/:userId", async (req, res) => {
+//Matchingroles
+router.get("/matching-roles/latest", async (req, res) => {
   try {
-    const userId = req.params.userId;
-
-    // 1️⃣ Get user's latest aspired role
-    const aspiredRoles = await sequelize.query(
-      `SELECT * FROM aspired_roles WHERE user_id = ? ORDER BY id DESC LIMIT 1`,
-      {
-        replacements: [userId],
-        type: sequelize.QueryTypes.SELECT,
-      }
-    );
-
-    if (!aspiredRoles.length) {
-      return res.json({ message: "No aspired role found", roles: [] });
-    }
-
-    const aspired = aspiredRoles[0];
-
-    // Parse user skills safely
-    let userSkills = [];
-    try {
-      userSkills = JSON.parse(aspired.technologies || "[]").map((s) =>
-        String(s).toLowerCase()
-      );
-    } catch (e) {
-      userSkills = [];
-    }
-
-    // 2️⃣ Fetch all roles from master list
-    const roles = await sequelize.query(`SELECT * FROM roles`, {
-      type: sequelize.QueryTypes.SELECT,
+    // 1️⃣ Get latest aspired role
+    const latestAspiredRole = await AspiredRole.findOne({
+      order: [["id", "DESC"]],
     });
 
-    // 3️⃣ Calculate match % for each role
-    const matches = roles.map((role) => {
-      const required = JSON.parse(role.skills || "[]").map((s) =>
-        String(s).toLowerCase()
+    if (!latestAspiredRole) {
+      return res.status(404).json({ message: "No aspired roles found" });
+    }
+
+    // Convert technologies string → array
+    const userSkills = JSON.parse(latestAspiredRole.technologies);
+    const userLower = userSkills.map((s) => s.toLowerCase());
+
+    // 2️⃣ Load all current openings
+    const openings = await CurrentOpening.findAll();
+
+    const results = openings.map((job) => {
+      // Convert required skills string → array
+      let required = [];
+
+      try {
+        if (Array.isArray(job.skills_required)) {
+          required = job.skills_required;
+        } else if (typeof job.skills_required === "string") {
+          required = JSON.parse(job.skills_required);
+        }
+      } catch (e) {
+        // Fallback: split by comma
+        required = job.skills_required.split(",").map((s) => s.trim());
+      }
+
+      const requiredLower = required.map((s) => s.toLowerCase());
+
+      // Matched skills
+      const matched = requiredLower.filter((skill) =>
+        userLower.includes(skill)
       );
 
-      const missing = required.filter((s) => !userSkills.includes(s));
+      // Missing skills
+      const missing = requiredLower.filter(
+        (skill) => !userLower.includes(skill)
+      );
 
-      const matchPercentage = Math.round(
-        ((required.length - missing.length) / required.length) * 100
+      // Match percentage
+      const percentage = Math.round(
+        (matched.length / requiredLower.length) * 100
       );
 
       return {
-        role: role.name,
+        jobId: job.id,
+        title: job.title,
         requiredSkills: required,
+        matchedSkills: matched,
         missingSkills: missing,
-        matchPercentage,
+        percentage,
       };
     });
 
-    // 4️⃣ Filter roles above 65%
-    const filtered = matches.filter((r) => r.matchPercentage >= 65);
+    // Sort by best match
+    results.sort((a, b) => b.percentage - a.percentage);
 
-    // 5️⃣ Sort by match percentage (highest first)
-    filtered.sort((a, b) => b.matchPercentage - a.matchPercentage);
-
-    res.json(filtered);
-  } catch (err) {
-    console.error("Matching roles error:", err);
-    res.status(500).json({ error: "Server error" });
+    res.json({ data: results });
+  } catch (error) {
+    console.error("Matching roles error:", error);
+    res.status(500).json({ message: "Matching roles error", error });
   }
 });
 

@@ -163,7 +163,7 @@
             <h2
               class="font-semibold text-xl mb-3 text-blue-400 flex items-center gap-2"
             >
-              <i class="lucide lucide-briefcase"></i> Matching Roles above 65%
+              <i class="lucide lucide-briefcase"></i> Matching Roles above 50%
             </h2>
             <p class="text-gray-400 text-sm mb-2">
               Jobs aligned with your skills.
@@ -224,7 +224,6 @@
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;");
       }
-
       async function loadCareerInsights() {
         try {
           // 1) Fetch latest aspired role
@@ -334,52 +333,80 @@
       async function loadMatchingRoles() {
         try {
           const res = await fetch(
-            "http://localhost:4000/api/skill-gap/matching-roles/1"
+            "http://localhost:4000/api/skill-gap/matching-roles/latest"
           );
-          if (!res.ok) throw new Error("Match roles API error");
           const data = await res.json();
 
           const container = document.getElementById("matchingRolesContent");
           container.innerHTML = "";
 
-          if (!Array.isArray(data) || data.length === 0) {
-            container.innerHTML = `<p class="text-gray-400">No matching roles found.</p>`;
+          if (!data.data || data.data.length === 0) {
+            container.innerHTML = `<p>No matching roles found.</p>`;
             return;
           }
 
-          container.innerHTML = `
-            <div class="grid grid-cols-1 gap-3">
-            ${data
-              .map((r) => {
-                const pct = r.matchPercentage || 0;
+          // 🚫 Hide anything below 50%
+          let filtered = data.data.filter((job) => job.percentage >= 50);
 
-                // Color logic
-                const barColor = pct >= 80 ? "bg-green-500" : "bg-amber-400";
+          if (filtered.length === 0) {
+            container.innerHTML = `<p>No roles match above 50%.</p>`;
+            return;
+          }
 
-                return `
-                  <div class="p-4 bg-[#1f1f1f] rounded-lg border border-gray-700">
-                    <div class="flex justify-between items-center mb-2">
-                      <p class="font-semibold text-sm">${esc(r.role)}</p>
-                      <span class="font-bold">${pct}%</span>
-                    </div>
+          // ⬆ Sort high → low
+          filtered.sort((a, b) => b.percentage - a.percentage);
 
-                    <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden">
-                      <div class="${barColor} h-3" style="width: ${pct}%"></div>
-                    </div>
+          filtered.forEach((job) => {
+            const pct = job.percentage;
 
-                    <p class="text-xs text-gray-400 mt-2">
-                      Missing: ${esc(r.missingSkills.join(", ") || "None")}
-                    </p>
-                  </div>`;
-              })
-              .join("")}
-            </div>
-          `;
+            // 🎨 TEXT COLOR RULES
+            let pctColor = "text-gray-400";
+            if (pct >= 80) pctColor = "text-green-400";
+            else if (pct >= 65) pctColor = "text-yellow-400";
+            else pctColor = "text-blue-400"; // 50–64
+
+            // 🎨 BAR COLOR RULES
+            let barColor = "bg-gray-500";
+            if (pct >= 80) barColor = "bg-green-400";
+            else if (pct >= 65) barColor = "bg-yellow-400";
+            else barColor = "bg-blue-400"; // 50–64
+
+            container.innerHTML += `
+        <div class="p-4 bg-[#1f1f1f] rounded-xl mb-4 border border-gray-700">
+          <div class="flex justify-between items-center">
+            <h4 class="font-semibold text-lg">${esc(job.title)}</h4>
+            <p class="font-bold text-xl ${pctColor}">${pct}%</p>
+          </div>
+
+          <p class="text-sm mt-2"><strong>Required:</strong> 
+            ${esc(job.requiredSkills.join(", "))}
+          </p>
+
+          <p class="text-sm mt-1"><strong>Matched:</strong> 
+            ${
+              job.matchedSkills.length
+                ? esc(job.matchedSkills.join(", "))
+                : "None"
+            }
+          </p>
+
+          <p class="text-sm mt-1"><strong>Missing:</strong> 
+            ${
+              job.missingSkills.length
+                ? esc(job.missingSkills.join(", "))
+                : "<span class='text-green-400'>None</span>"
+            }
+          </p>
+
+          <!-- 🎨 Gradient Progress Bar -->
+          <div class="mt-4 w-full bg-gray-800 h-3 rounded-full overflow-hidden">
+            <div class="h-full ${barColor}" style="width:${pct}%"></div>
+          </div>
+        </div>
+      `;
+          });
         } catch (err) {
           console.error("loadMatchingRoles error:", err);
-          document.getElementById(
-            "matchingRolesContent"
-          ).innerHTML = `<p class="text-red-400">❌ Unable to load matching roles.</p>`;
         }
       }
 
@@ -525,11 +552,11 @@
         }
       }
 
-      document.addEventListener("DOMContentLoaded", () => {
-        loadCareerInsights();
-        loadMatchingRoles().then(() => loadOpeningsMatch());
-        // learning paths depends on missingSkills, wait a touch (we can't wait async in background, but this is best-effort)
-        setTimeout(loadLearningPaths, 400);
+      document.addEventListener("DOMContentLoaded", async () => {
+        await loadCareerInsights(); // loads userSkills + missingSkills
+        await loadMatchingRoles(); // uses userSkills for % bars
+        await loadOpeningsMatch(); // uses userSkills to compare
+        await loadLearningPaths(); // uses missingSkills
       });
     </script>
   </body>

@@ -54,7 +54,7 @@ router.get("/latest-gap", async (req, res) => {
     if (!role) return res.status(404).json({ message: "Role not found in DB" });
 
     const requiredSkills = role.requiredSkills.map((s) => s.name);
-    const userSkills = ["JavaScript", "React", "HTML", "CSS"]; // For now
+    const userSkills = ["JavaScript", "React", "HTML", "CSS", "SQL"]; // For now
 
     const missingSkills = requiredSkills.filter((s) => !userSkills.includes(s));
 

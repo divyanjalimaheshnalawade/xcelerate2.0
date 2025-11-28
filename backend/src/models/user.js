@@ -14,7 +14,6 @@ module.exports = (sequelize) => {
       experience_years: { type: DataTypes.FLOAT, defaultValue: 0 },
       bio: { type: DataTypes.TEXT },
 
-      // ✅ NEW FIELD for AI-driven matching
       current_skills: {
         type: DataTypes.JSON,
         allowNull: true,
